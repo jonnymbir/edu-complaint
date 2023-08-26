@@ -4,7 +4,7 @@
 		<div class="modal-content">
 			<div class="modal-header d-flex align-items-center">
 				<h4 class="modal-title" id="myModalLabel">
-					Ticket Number: <strong>{{ $this->ticket_number }}</strong>
+					Complaint ID: <strong>{{ $this->ticket_number }}</strong>
 					<span class="ms-2">
 						@if($this->status === 'pending')
 							<span class="badge bg-warning">{{ $this->status }}</span>
@@ -14,6 +14,8 @@
 							<span class="badge bg-success">{{ $this->status }}</span>
 						@elseif($this->status === 'open')
 							<span class="badge bg-danger">{{ $this->status }}</span>
+						@elseif($this->status === 'forwarded')
+							<span class="badge bg-primary">{{ $this->status }}</span>
 						@endif
 				</h4>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -71,13 +73,17 @@
 							<textarea class="form-control" id="details" placeholder="Details" disabled readonly wire:model="details"></textarea>
 						</div>
 						
-						<div class="col-md-6 mb-3">
-							<label for="last_name">Response Channel</label>
+						<div class="col-md-4 mb-3">
+							<label for="response_channel">Response Channel</label>
 							<input type="text" class="form-control" id="response_channel" placeholder="Response Channel" disabled readonly wire:model="response_channel">
 						</div>
-						<div class="col-md-6 mb-3">
-							<label for="last_name">Is Anonymous</label>
+						<div class="col-md-4 mb-3">
+							<label for="is_anonymous">Is Anonymous</label>
 							<input type="text" class="form-control" id="is_anonymous" disabled readonly wire:model="is_anonymous">
+						</div>
+						<div class="col-md-4 mb-3">
+							<label for="age_range">Age Range</label>
+							<input type="text" class="form-control" id="age_range" disabled readonly wire:model="age_range">
 						</div>
 						
 					</div>

@@ -16,24 +16,36 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-
-//        $routes = Route::getRoutes();
-
-//        foreach ($routes as $route) {
-//            $name = $route->getName();
-//
-//            $_action = explode('.', $name);
-//            if (empty($_action[0]) || in_array($_action[0], ['verification', 'password', 'login', 'logout', 'debugbar', 'livewire', 'ignition', 'telescope'])) {
-//                continue;
-//            }
-//
-//            if ($name) {
-//                // Create a new permission if it doesn't exist
-//                Permission::firstOrCreate(['name' => $name]);
-//            }
-//        }
-
 	    Permission::firstOrCreate(['name' => 'dashboard']);
+	    Permission::firstOrCreate(['name' => 'users.list']);
+	    Permission::firstOrCreate(['name' => 'users.create']);
+	    Permission::firstOrCreate(['name' => 'users.edit']);
+	    Permission::firstOrCreate(['name' => 'users.delete']);
+	    Permission::firstOrCreate(['name' => 'roles.list']);
+	    Permission::firstOrCreate(['name' => 'roles.create']);
+	    Permission::firstOrCreate(['name' => 'roles.edit']);
+	    Permission::firstOrCreate(['name' => 'regions.list']);
+	    Permission::firstOrCreate(['name' => 'regions.create']);
+	    Permission::firstOrCreate(['name' => 'regions.edit']);
+	    Permission::firstOrCreate(['name' => 'regions.delete']);
+	    Permission::firstOrCreate(['name' => 'district.list']);
+	    Permission::firstOrCreate(['name' => 'district.create']);
+	    Permission::firstOrCreate(['name' => 'district.delete']);
+	    Permission::firstOrCreate(['name' => 'complaint.create']);
+	    Permission::firstOrCreate(['name' => 'complaint.view']);
+	    Permission::firstOrCreate(['name' => 'complaint.comment']);
+	    Permission::firstOrCreate(['name' => 'complaint.reply']);
+	    Permission::firstOrCreate(['name' => 'complaint.forward']);
+	    Permission::firstOrCreate(['name' => 'division.list']);
+	    Permission::firstOrCreate(['name' => 'division.create']);
+	    Permission::firstOrCreate(['name' => 'division.edit']);
+	    Permission::firstOrCreate(['name' => 'division.delete']);
+	    Permission::firstOrCreate(['name' => 'unit.list']);
+	    Permission::firstOrCreate(['name' => 'unit.create']);
+	    Permission::firstOrCreate(['name' => 'unit.edit']);
+	    Permission::firstOrCreate(['name' => 'unit.delete']);
+	    Permission::firstOrCreate(['name' => 'activity.list']);
+	    Permission::firstOrCreate(['name' => 'activity.clear']);
 
         // create super admin role and assign all permissions with the user
         $role = Role::create(['name' => 'admin']);

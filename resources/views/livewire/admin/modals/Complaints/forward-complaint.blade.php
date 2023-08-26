@@ -15,27 +15,85 @@
 					
 					<div class="card-body">
 						<div class="row">
-{{--							<div class="col-md-6 mb-3">--}}
-{{--								<label for="response_channel">Forward Type</label>--}}
-{{--								<select class="form-control" id="concern" wire:model.lazy="response_channel">--}}
-{{--									<option selected value="">Select Option</option>--}}
-{{--									<option value="email">Email</option>--}}
-{{--									<option value="telephone">Telephone</option>--}}
-{{--									<option value="whatsapp">WhatsApp</option>--}}
-{{--									<option value="field_visit">Field Visit</option>--}}
-{{--									<option value="none">None</option>--}}
-{{--								</select>--}}
-{{--								--}}
-{{--								@error('response_channel')--}}
-{{--								<span class="text-danger">{{ $message }}</span>--}}
-{{--								@enderror--}}
-{{--							</div>--}}
+							<div class="col-md-12 mb-3">
+								<label for="forward_type">Forward Type</label>
+								<select class="form-control" id="forward_type" wire:model.lazy="forward_type">
+									<option selected value="">Select Option</option>
+									<option value="division">Division</option>
+									<option value="unit">Unit</option>
+								</select>
+								
+								@error('forward_type')
+								<span class="text-danger">{{ $message }}</span>
+								@enderror
+							</div>
+							
+							@if($this->forward_type === 'division')
+								<div class="col-md-6 mb-3">
+									<label for="division">Divisions</label>
+									<select class="form-control" id="division" wire:model.lazy="division">
+										<option selected value="">Select Option</option>
+										@foreach($divisions as $division)
+											<option value="{{ $division->id }}">{{ $division->div_name }}</option>
+										@endforeach
+									</select>
+									
+									@error('division')
+									<span class="text-danger">{{ $message }}</span>
+									@enderror
+								</div>
+							
+								<div class="col-md-6 mb-3">
+									<label for="div_email">Division Email</label>
+									<input type="text" class="form-control" id="div_email" disabled readonly placeholder="Division" wire:model.lazy="div_email">
+									
+									@error('div_email')
+									<span class="text-danger">{{ $message }}</span>
+									@enderror
+								</div>
+							@endif
+							
+							@if($this->forward_type === 'unit')
+								<div class="col-md-6 mb-3">
+									<label for="unit">Units</label>
+									<select class="form-control" id="unit" wire:model.lazy="unit">
+										<option selected value="">Select Option</option>
+										@foreach($units as $unit)
+											<option value="{{ $unit->id }}">{{ $unit->unit_name }}</option>
+										@endforeach
+									</select>
+									
+									@error('unit')
+									<span class="text-danger">{{ $message }}</span>
+									@enderror
+								</div>
+								
+								<div class="col-md-6 mb-3">
+									<label for="unit_email">Unit Email</label>
+									<input type="text" class="form-control" id="unit_email" disabled readonly placeholder="Division" wire:model.lazy="unit_email">
+									
+									@error('unit_email')
+									<span class="text-danger">{{ $message }}</span>
+									@enderror
+								</div>
+							@endif
+							
+							<div class="col-md-12 mb-3">
+								<label for="cc">CC</label>
+								<input type="text" class="form-control" name="cc" id="cc" placeholder="CC" wire:model.lazy="cc">
+								<small class="text-muted">Separate emails with comma</small>
+								
+								@error('cc')
+								<span class="text-danger">{{ $message }}</span>
+								@enderror
+							</div>
+							
 						</div>
 					</div>
 				
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-info rounded-pill px-4 mt-3" type="submit">
+					<button class="btn btn-info rounded-pill px-4 mt-3" type="submit" wire:loading.class.remove="disabled">
 						Forward Complaint
 					</button>
 					<button type="button" class="btn btn-danger rounded-pill px-4 mt-3" data-bs-dismiss="modal">

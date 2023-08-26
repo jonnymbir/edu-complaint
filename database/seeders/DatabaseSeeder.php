@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
          \App\Models\User::factory(4)->create();
          \App\Models\Complaint::factory(4)->create();
          \App\Models\Comment::factory(20)->create();
-
+         \App\Models\ComplaintCategory::factory(8)->create();
+         \App\Models\Division::factory(5)->create();
+         \App\Models\Unit::factory(5)->create();
     }
 }

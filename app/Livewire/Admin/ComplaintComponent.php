@@ -4,7 +4,12 @@ namespace App\Livewire\Admin;
 
 use App\Models\Complaint;
 use App\Models\District;
+use App\Models\Division;
+use App\Models\Unit;
+use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use JsonException;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
@@ -32,6 +37,8 @@ class ComplaintComponent extends Component
 	public ?string $telephone;
 	#[Rule('required|string|in:male,female')]
 	public ?string $sex = 'male';
+	#[Rule('required|string')]
+	public ?string $age_range = null;
 	#[Rule('required|exists:regions,id')]
 	public mixed $region = null;
 	#[Rule('required|exists:districts,id')]
@@ -57,6 +64,13 @@ class ComplaintComponent extends Component
 	public mixed $comment;
 	public mixed $response;
 
+	public $forward_type;
+	public ?int $division = null;
+	public ?int $unit = null;
+	public ?string $div_email;
+	public ?string $unit_email;
+	public mixed $cc;
+
 	public function mount(): void
 	{
 		$this->regions = \App\Models\Region::oldest('name')->get();
@@ -73,6 +87,8 @@ class ComplaintComponent extends Component
 	        				->latest()
 							->where('ticket_number', 'like', '%'.$this->search.'%')
 	        				->paginate(10),
+	        'divisions' => \App\Models\Division::all(),
+	        'units' => \App\Models\Unit::all(),
         ])->extends('layouts.app');
     }
 
@@ -144,6 +160,12 @@ class ComplaintComponent extends Component
 			'complaint_id' => $this->complaint->id,
 		]);
 
+		activity()
+			->causedBy(auth()->user())
+			->performedOn($this->complaint)
+			->event('commented on complaint')
+			->log('Comment added successfully by ' . auth()->user()->name . '.');
+
 		$this->reset('comment');
 
 		toastr()->success('Comment added successfully.');
@@ -160,6 +182,12 @@ class ComplaintComponent extends Component
 			'response' => $this->response,
 			'status' => 'responded',
 		]);
+
+		activity()
+			->causedBy(auth()->user())
+			->performedOn($this->complaint)
+			->event('responded to complaint')
+			->log('Complaint responded to successfully by ' . auth()->user()->name . '.');
 
 		toastr()->success('Response added successfully.');
 		session()->flash('success', 'Response added successfully.');
@@ -197,6 +225,12 @@ class ComplaintComponent extends Component
 			'is_anonymous' => $this->is_anonymous,
 		]);
 
+		activity()
+			->causedBy(auth()->user())
+			->performedOn($this->complaint)
+			->event('created complaint')
+			->log('Complaint created successfully by ' . auth()->user()->name . '.');
+
 		$this->reset();
 
 		$this->regions = \App\Models\Region::oldest('name')->get();
@@ -210,11 +244,84 @@ class ComplaintComponent extends Component
 		return redirect()->route('complaints')->with('success', 'Complaint submitted successfully');
 	}
 
+	public function updatedDivision(): void
+	{
+		$this->div_email = Division::where('id', $this->division)->first()->div_email;
+	}
+
+	public function updatedUnit(): void
+	{
+		$this->unit_email = Unit::where('id', $this->unit)->first()->unit_email;
+	}
+
 	public function forwardComplaint(): void
 	{
-		dd("Working progress...");
+		sleep(1);
 
-		toastr()->success('Complaint forwarded successfully.');
-		session()->flash('success', 'Complaint forwarded successfully.');
+		$this->validate([
+			'forward_type' => 'required|string|in:division,unit',
+			'cc' => 'nullable|string',
+		]);
+
+		if ($this->forward_type === 'division') {
+			$this->validate([
+				'division' => 'required|exists:divisions,id',
+			]);
+		} else {
+			$this->validate([
+				'unit' => 'required|exists:units,id',
+			]);
+		}
+
+		$div = Division::where('id', $this->division)->first();
+		$uni = Unit::where('id', $this->unit)->first();
+
+		try {
+			DB::beginTransaction();
+
+			$this->complaint->update([
+				'is_forwarded' => true,
+				'times_forwarded' => $this->complaint->times_forwarded + 1,
+				'status' => 'forwarded',
+			]);
+
+			activity()
+				->causedBy(auth()->user())
+				->performedOn($this->complaint)
+				->event('forwarded')
+				->log('Complaint forwarded to ' . $this->forward_type === 'division' ? $div?->div_name : $uni?->unit_name . ' successfully by ' . auth()->user()->name . '.');
+
+			$data = [
+				'complaint' => $this->complaint,
+				'forward_type' => $this->forward_type,
+				'email' => $this->forward_type === 'division' ? $this->div_email : $this->unit_email,
+				'cc' => $this->cc,
+			];
+
+			$ccRecipients = [$this->cc];
+
+			// send mail to division with cc and bcc
+			Mail::send('emails.forward_complaint_mail', $data, function ($message) use ($div, $uni, $ccRecipients) {
+				$message->from(config('mail.from.address'), config('mail.from.name'));
+				$message->to($this->forward_type === 'division' ? $this->div_email : $this->unit_email, $this->forward_type === 'division' ? $div->div_contact_person : $uni->unit_contact_person);
+//				$message->cc($ccRecipients);
+				$message->subject('Forwarded Complaint');
+			});
+
+			DB::commit();
+
+			session()->flash('success', 'Complaint forwarded successfully.');
+			toastr()->success('Complaint forwarded successfully.');
+		} catch (Exception $e) {
+			DB::rollBack();
+			activity()
+				->causedBy(auth()->user())
+				->performedOn($this->complaint)
+				->event('forwarded')
+				->log('Complaint forwarding failed to ' . $this->forward_type === 'division' ? $div?->div_name : $uni?->unit_name . ' by ' . auth()->user()->name . '.');
+
+			toastr()->error('Complaint forwarding failed. ' . $e->getMessage());
+			session()->flash('error', 'Complaint forwarding failed.' . $e->getMessage());
+		}
 	}
 }

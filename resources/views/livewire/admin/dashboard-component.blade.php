@@ -132,6 +132,10 @@
 													<span class="badge fw-semibold py-1 w-85 bg-light-danger text-danger">
 														{{ $recent_complaint->status }}
 													</span>
+												@elseif($recent_complaint->status === 'forwarded')
+													<span class="badge fw-semibold py-1 w-85 bg-light-primary text-primary">
+														{{ $recent_complaint->status }}
+													</span>
 												@else
 													<span class="badge fw-semibold py-1 w-85 bg-light-info text-info">
 														{{ $recent_complaint->status }}

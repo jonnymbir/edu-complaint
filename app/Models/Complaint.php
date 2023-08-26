@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -14,6 +15,7 @@ class Complaint extends Model
 	protected $table = 'complaints';
 
 	protected $fillable = [
+		'complaint_category_id',
 		'ticket_number',
 		'first_name',
 		'middle_name',
@@ -46,7 +48,7 @@ class Complaint extends Model
 		parent::boot();
 
 		static::creating(callback: function ($complaint) {
-			$complaint->ticket_number = 'TCKT' . random_int(1, 999) . $complaint->count() + 1;
+			$complaint->ticket_number = 'CID' . random_int(1, 999) . $complaint->count() + 1;
 		});
 	}
 
@@ -79,12 +81,17 @@ class Complaint extends Model
 		return Str::headline($value);
 	}
 
-	public function region(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+	public function complaintCategory(): BelongsTo
+	{
+		return $this->belongsTo(ComplaintCategory::class);
+	}
+
+	public function region(): BelongsTo
 	{
 		return $this->belongsTo(Region::class);
 	}
 
-	public function district(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+	public function district(): BelongsTo
 	{
 		return $this->belongsTo(District::class);
 	}

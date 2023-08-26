@@ -131,7 +131,7 @@
 								@enderror
 							</div>
 							
-							<div class="col-md-6 mb-3">
+							<div class="col-md-4 mb-3">
 								<label for="response_channel">Response Channel</label>
 								<select class="form-control" id="concern" wire:model.lazy="response_channel">
 									<option selected value="">Select Option</option>
@@ -146,7 +146,18 @@
 									<span class="text-danger">{{ $message }}</span>
 								@enderror
 							</div>
-							<div class="col-md-6 mb-3">
+							
+							<div class="col-md-4 mb-3">
+								<label for="age_range">Age Range</label>
+								<input type="text" class="form-control" id="age_range" wire:model="age_range">
+								<small class="text-muted">e.g 18-25</small>
+								
+								@error('age_range')
+								<span class="text-danger">{{ $message }}</span>
+								@enderror
+							</div>
+							
+							<div class="col-md-4 mb-3">
 								<label for="last_name">Is Anonymous</label> <br>
 								<input type="checkbox" class="form-check-input" id="is_anonymous" wire:model="is_anonymous">
 								<label class="" for="is_anonymous">

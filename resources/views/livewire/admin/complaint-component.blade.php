@@ -1,5 +1,8 @@
 @section('title', 'Complaints')
 
+@section('styles')
+@endsection
+
 <div>
 	
 	<div class="container-fluid">
@@ -25,7 +28,7 @@
 										<div class="col-sm-3 col-md-3 form-group">
 											<label for="search">Search</label>
 											<input type="text" class="form-control"
-											       placeholder="Search by ticket number"
+											       placeholder="Search by Complaint ID"
 											       wire:model.live.debounce.550ms="search"/>
 										</div>
 										
@@ -48,7 +51,7 @@
 								<thead>
 								<tr>
 									<th scope="col">#</th>
-									<th scope="col">Ticket No</th>
+									<th scope="col">Complaint ID</th>
 									<th scope="col">Full Name</th>
 									<th scope="col">Telephone</th>
 									<th scope="col">Gender</th>
@@ -79,11 +82,13 @@
 												        wire:click="showCommentForm({{ $complaint->id }})">
 													<i class="fa fa-reply"></i>
 												</button>
-												<button class="btn btn-sm btn-dark shadow btn-xs sharp me-1"
-												        data-bs-toggle="modal" data-bs-target="#forwardComplaintModal"
-												        wire:click="showCommentForm({{ $complaint->id }})">
-													<i class="fa fa-forward"></i>
-												</button>
+												@if(!$complaint->is_forwarded)
+													<button class="btn btn-sm btn-dark shadow btn-xs sharp me-1"
+													        data-bs-toggle="modal" data-bs-target="#forwardComplaintModal"
+													        wire:click="showCommentForm({{ $complaint->id }})">
+														<i class="fa fa-forward"></i>
+													</button>
+												@endif
 											</div>
 										</td>
 									</tr>
@@ -108,3 +113,6 @@
 	</div>
 
 </div>
+
+@section('scripts')
+@endsection

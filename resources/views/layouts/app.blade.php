@@ -25,6 +25,8 @@
 	<link  id="themeColors"  rel="stylesheet" href="{{asset('dist/css/style.min.css')}}" />
 	
 	@livewireStyles
+	
+	@yield('styles')
 </head>
 
 <body>
@@ -67,6 +69,8 @@
 	<script src="{{asset('dist/js/dashboard.js')}}"></script>
 	
 	@livewireScripts
+
+	@yield('scripts')
 
 </body>
 
