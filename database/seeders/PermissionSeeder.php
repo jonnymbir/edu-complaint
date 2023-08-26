@@ -46,6 +46,7 @@ class PermissionSeeder extends Seeder
 	    Permission::firstOrCreate(['name' => 'units.edit']);
 	    Permission::firstOrCreate(['name' => 'units.delete']);
 	    Permission::firstOrCreate(['name' => 'activity_logs.list']);
+	    Permission::firstOrCreate(['name' => 'activity_logs.view']);
 	    Permission::firstOrCreate(['name' => 'activity_logs.clear']);
 
         // create super admin role and assign all permissions with the user

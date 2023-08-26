@@ -36,4 +36,5 @@ Route::group(['middleware' => ['auth']], static function (){
 	Route::get('/complaint', \App\Livewire\Admin\ComplaintComponent::class)->name('complaints');
 	Route::get('/divisions', \App\Livewire\Admin\DivisionComponent::class)->name('divisions');
 	Route::get('/units', \App\Livewire\Admin\UnitComponent::class)->name('units');
+	Route::get('/activity_logs', \App\Livewire\Admin\ActivityLogComponent::class)->name('activity_logs');
 });

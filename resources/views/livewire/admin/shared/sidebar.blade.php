@@ -121,6 +121,27 @@
 							</li>
 						@endif
 					@endif
+					
+					<!-- ============================= -->
+					<!-- PAGES -->
+					<!-- ============================= -->
+					@if(auth()->user()->can('activity_logs.list'))
+						<li class="nav-small-cap">
+							<i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+							<span class="hide-menu">Configuration</span>
+						</li>
+						
+						@if(auth()->user()->can('activity_logs.list'))
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{{ route('activity_logs') }}" aria-expanded="false">
+					              <span>
+					                <i class="ti ti-activity"></i>
+					              </span>
+									<span class="hide-menu">Activity Logs</span>
+								</a>
+							</li>
+						@endif
+					@endif
 				</ul>
 			</nav>
 			

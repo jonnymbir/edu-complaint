@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Division extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
 	protected $table = 'divisions';
 
@@ -19,6 +21,22 @@ class Division extends Model
 		'div_contact_person_telephone',
 		'div_cc'
 	];
+
+	public function getActivitylogOptions(): LogOptions
+	{
+		return LogOptions::defaults()
+			->logOnly([
+				'div_name',
+				'div_email',
+				'div_contact_person',
+				'div_contact_person_telephone',
+				'div_cc'
+			])
+			->logOnlyDirty()
+			->setDescriptionForEvent(fn (string $eventName) =>  "This Record has been {$eventName} by user: " . auth()->user()?->name ?? 'Unknown')
+			->useLogName('Division Activity Log')
+			->dontSubmitEmptyLogs();
+	}
 
 	// get div_contact_person name from email if null or empty, on create
 	public static function boot(): void

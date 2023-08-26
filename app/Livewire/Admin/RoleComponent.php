@@ -128,6 +128,12 @@ class RoleComponent extends Component
 
 		// check if role has users
 		if ($role->users()->count() > 0) {
+			activity()
+				->causedBy(auth()->user())
+				->performedOn($role)
+				->event('failed to delete role')
+				->log('Failed to delete '.$role->name.' role because it has users assigned to it.');
+
 			return redirect()->route('roles')->with('error', 'Role cannot be deleted because it has users assigned to it.');
 		}
 

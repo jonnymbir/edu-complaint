@@ -80,7 +80,7 @@
 							
 							<div class="col-md-12 mb-3">
 								<label for="cc">CC</label>
-								<textarea class="form-control" rows="5" name="cc" id="cc" placeholder="CC" required wire:model="cc"></textarea>
+								<textarea class="form-control" rows="5" name="cc" id="cc" placeholder="CC" wire:model="cc"></textarea>
 								<small class="text-muted">Separate emails with comma</small>
 								
 								@error('cc')

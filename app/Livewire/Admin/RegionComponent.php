@@ -67,12 +67,6 @@ class RegionComponent extends Component
 			}
 		}
 
-		activity()
-			->causedBy(auth()->user())
-			->performedOn($this_regions)
-			->event('created region')
-			->log($this_regions->name.' region created successfully by '.auth()->user()->name);
-
 		$this->reset('region_name');
 
 		return redirect()->route('regions')->with('success', 'Region created successfully.');
@@ -113,12 +107,6 @@ class RegionComponent extends Component
 			}
 		}
 
-		activity()
-			->causedBy(auth()->user())
-			->performedOn($region)
-			->event('created region')
-			->log($region->name.' region updated successfully by '.auth()->user()->name);
-
 		$this->reset('region_id', 'region_name');
 
 		return redirect()->route('regions')->with('success', 'Region updated successfully.');
@@ -135,12 +123,6 @@ class RegionComponent extends Component
 			return redirect()->route('regions')->with('error', 'Region has districts. Delete districts first.');
 		}
 
-		activity()
-			->causedBy(auth()->user())
-			->performedOn($region)
-			->event('updated region')
-			->log($region->name.' region deleted successfully by '.auth()->user()->name);
-
 		$region->forceDelete();
 
 		return redirect()->route('regions')->with('success', 'Region deleted successfully.');
@@ -152,13 +134,6 @@ class RegionComponent extends Component
 
 		// get district
 		$district = \App\Models\District::findOrFail($id);
-
-		// log activity
-		activity()
-			->causedBy(auth()->user())
-			->performedOn($district)
-			->event('deleted region')
-			->log($district->name.' district deleted successfully by '.auth()->user()->name);
 
 		// delete district
 		$district->forceDelete();

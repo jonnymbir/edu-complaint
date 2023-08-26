@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Complaint extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity;
 
 	protected $table = 'complaints';
 
@@ -41,6 +43,37 @@ class Complaint extends Model
 		'attachments' => 'array',
 		'is_anonymous' => 'boolean',
 	];
+
+	public function getActivitylogOptions(): LogOptions
+	{
+		return LogOptions::defaults()
+			->logOnly([
+				'complaint_category.name',
+				'ticket_number',
+				'first_name',
+				'middle_name',
+				'last_name',
+				'email_address',
+				'telephone',
+				'sex',
+				'region.name',
+				'district.name',
+				'stakeholder_type',
+				'concern',
+				'details',
+				'response',
+				'is_forwarded',
+				'times_forwarded',
+				'attachments',
+				'response_channel',
+				'is_anonymous',
+				'status',
+			])
+			->logOnlyDirty()
+			->setDescriptionForEvent(fn (string $eventName) =>  "This Record has been {$eventName} by user: " . auth()->user()?->name ?? 'Unknown')
+			->useLogName('Complaint Activity Log')
+			->dontSubmitEmptyLogs();
+	}
 
 	// generate ticket number
 	public static function boot(): void

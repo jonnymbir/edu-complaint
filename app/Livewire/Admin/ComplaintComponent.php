@@ -70,7 +70,7 @@ class ComplaintComponent extends Component
 	public ?int $unit = null;
 	public ?string $div_email;
 	public ?string $unit_email;
-	public mixed $cc;
+	public $cc;
 
 	public ?int $complaint_category = null;
 
@@ -135,12 +135,6 @@ class ComplaintComponent extends Component
 			Complaint::where('id', $this->complaint->id)->update([
 				'complaint_category_id' => $value,
 			]);
-
-			activity()
-				->causedBy(auth()->user())
-				->performedOn($this->complaint)
-				->event('updated complaint category')
-				->log('Complaint category updated successfully by ' . auth()->user()->name . '.');
 
 			session()->flash('success', 'Category assigned successfully.');
 		}
@@ -219,12 +213,6 @@ class ComplaintComponent extends Component
 			'complaint_id' => $this->complaint->id,
 		]);
 
-		activity()
-			->causedBy(auth()->user())
-			->performedOn($this->complaint)
-			->event('commented on complaint')
-			->log('Comment added successfully by ' . auth()->user()->name . '.');
-
 		$this->reset('comment');
 
 //		toastr()->success('Comment added successfully.');
@@ -243,12 +231,6 @@ class ComplaintComponent extends Component
 			'response' => $this->response,
 			'status' => 'responded',
 		]);
-
-		activity()
-			->causedBy(auth()->user())
-			->performedOn($this->complaint)
-			->event('responded to complaint')
-			->log('Complaint responded to successfully by ' . auth()->user()->name . '.');
 
 //		toastr()->success('Response added successfully.');
 		session()->flash('success', 'Response added successfully.');
@@ -287,12 +269,6 @@ class ComplaintComponent extends Component
 			'response_channel' => $this->response_channel,
 			'is_anonymous' => $this->is_anonymous,
 		]);
-
-		activity()
-			->causedBy(auth()->user())
-			->performedOn($this->complaint)
-			->event('created complaint')
-			->log('Complaint created successfully by ' . auth()->user()->name . '.');
 
 		$this->reset();
 
@@ -358,12 +334,6 @@ class ComplaintComponent extends Component
 				'status' => 'forwarded',
 			]);
 
-			activity()
-				->causedBy(auth()->user())
-				->performedOn($this->complaint)
-				->event('forwarded')
-				->log('Complaint forwarded to ' . $this->forward_type === 'division' ? $div?->div_name : $uni?->unit_name . ' successfully by ' . auth()->user()->name . '.' . ($this->cc ? ' CC: ' . $this->cc : ''));
-
 			$data = [
 				'complaint' => $this->complaint,
 				'forward_type' => $this->forward_type,
@@ -393,7 +363,7 @@ class ComplaintComponent extends Component
 				->causedBy(auth()->user())
 				->performedOn($this->complaint)
 				->event('forwarded')
-				->log('Complaint forwarding failed to ' . $this->forward_type === 'division' ? $div?->div_name : $uni?->unit_name . ' by ' . auth()->user()->name . '.');
+				->log('Complaint forwarding failed due to an error.');
 
 //			toastr()->error('Complaint forwarding failed. ' . $e->getMessage());
 			session()->flash('error', 'Complaint forwarding failed.' . $e->getMessage());

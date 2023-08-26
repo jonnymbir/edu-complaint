@@ -60,12 +60,6 @@ class UserComponent extends Component
 
 		$user->assignRole($this->role);
 
-		activity()
-			->causedBy(auth()->user())
-			->performedOn($user)
-			->event('created user')
-			->log($user->name.' user was created by '.auth()->user()->name.'.');
-
 		$this->reset();
 
 		return redirect()->route('users')->with('success', 'User created successfully.');
@@ -111,12 +105,6 @@ class UserComponent extends Component
 
 		$user->syncRoles($this->role);
 
-		activity()
-			->causedBy(auth()->user())
-			->performedOn($user)
-			->event('updated user')
-			->log($user->name.' user was updated by '.auth()->user()->name.'.');
-
 		$this->reset();
 
 		return redirect()->route('users')->with('success', 'User updated successfully.');
@@ -138,12 +126,6 @@ class UserComponent extends Component
 
 			return redirect()->route('users')->with('error', 'User has comment records. Delete comments first.');
 		}
-
-		activity()
-			->causedBy(auth()->user())
-			->performedOn($user)
-			->event('deleted user')
-			->log($user->name.' user was deleted by '.auth()->user()->name.'.');
 
 		$user->forceDelete();
 

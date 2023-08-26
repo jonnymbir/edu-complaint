@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 26/08/2023 13:32:10
+ Date: 26/08/2023 19:30:10
 */
 
 SET NAMES utf8mb4;
@@ -38,15 +38,12 @@ CREATE TABLE `activity_log`  (
   INDEX `subject`(`subject_type` ASC, `subject_id` ASC) USING BTREE,
   INDEX `causer`(`causer_type` ASC, `causer_id` ASC) USING BTREE,
   INDEX `activity_log_log_name_index`(`log_name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of activity_log
 -- ----------------------------
-INSERT INTO `activity_log` VALUES (1, 'default', ' successfully by Super Admin.', 'App\\Models\\Complaint', 'forwarded', 1, 'App\\Models\\User', 1, '[]', NULL, '2023-08-26 12:40:21', '2023-08-26 12:40:21');
-INSERT INTO `activity_log` VALUES (3, 'default', ' by Super Admin.', 'App\\Models\\Complaint', 'forwarded', 1, 'App\\Models\\User', 1, '[]', NULL, '2023-08-26 13:16:57', '2023-08-26 13:16:57');
-INSERT INTO `activity_log` VALUES (5, 'default', ' by Super Admin.', 'App\\Models\\Complaint', 'forwarded', 1, 'App\\Models\\User', 1, '[]', NULL, '2023-08-26 13:18:58', '2023-08-26 13:18:58');
-INSERT INTO `activity_log` VALUES (7, 'default', 'Bonita Olson by Super Admin.', 'App\\Models\\Complaint', 'forwarded', 1, 'App\\Models\\User', 1, '[]', NULL, '2023-08-26 13:28:07', '2023-08-26 13:28:07');
+INSERT INTO `activity_log` VALUES (1, 'Complaint Activity Log', 'This Record has been created by user: Super Admin', 'App\\Models\\Complaint', 'created', 5, 'App\\Models\\User', 1, '{\"attributes\": {\"sex\": \"Male\", \"status\": \"pending\", \"concern\": \"Recommendation\", \"details\": \"Minus deserunt tempo\", \"response\": null, \"last_name\": \"Name\", \"telephone\": \"15216949702\", \"first_name\": \"A\", \"attachments\": null, \"middle_name\": \"Better\", \"region.name\": \"Volta\", \"is_anonymous\": true, \"is_forwarded\": 0, \"district.name\": \"Afadjato South\", \"email_address\": \"kuvoz@mailinator.com\", \"ticket_number\": \"CID295\", \"times_forwarded\": 0, \"response_channel\": \"Whatsapp\", \"stakeholder_type\": \"Staff\", \"complaintCategory.name\": null}}', NULL, '2023-08-26 19:15:47', '2023-08-26 19:15:47');
 
 -- ----------------------------
 -- Table structure for comments
@@ -73,26 +70,26 @@ CREATE TABLE `comments`  (
 -- ----------------------------
 -- Records of comments
 -- ----------------------------
-INSERT INTO `comments` VALUES (1, 1, 1, NULL, 'Minima aut voluptate velit explicabo quisquam facilis reiciendis. Et aut rerum qui sunt beatae quis perspiciatis. Qui praesentium repellendus quibusdam itaque ab inventore sed.', NULL, '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `comments` VALUES (2, 4, 4, NULL, 'Et totam consequatur totam excepturi pariatur. Incidunt rerum est dolor libero repellat recusandae. Porro voluptates quis cum accusamus sunt.', NULL, '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `comments` VALUES (3, 4, 4, NULL, 'Doloribus id et et doloremque reprehenderit dignissimos. Dolore maiores possimus ex. Eos deleniti id autem ipsa ullam aut beatae quia. Quibusdam velit assumenda nam inventore.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (4, 2, 1, NULL, 'Perspiciatis magnam tempora aspernatur quia autem aut illum. Nam et recusandae nihil voluptates. Animi et eaque sunt nulla.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (5, 1, 2, NULL, 'Voluptatem enim quam mollitia iste tempore. Ut velit quia molestiae minus sint. Illo numquam nihil dolores omnis consequatur maiores. Ut dolore atque qui est eum incidunt aut.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (6, 4, 2, NULL, 'Quia voluptas omnis voluptas consequuntur. Sunt provident nisi nesciunt et voluptatum dolorem. Ullam et sapiente tempore et delectus quasi repudiandae.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (7, 3, 1, NULL, 'Adipisci voluptatem repudiandae cupiditate commodi et. Tempore molestiae blanditiis rerum dicta ex reprehenderit laboriosam labore. Consequatur consectetur voluptas quo hic facilis. Qui in nihil molestiae quia maiores numquam repudiandae ratione. Eligendi dignissimos consequatur et excepturi.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (8, 3, 5, NULL, 'Sed assumenda id fugit sunt ut. Officiis consequatur qui sequi a et. Officiis veniam in nulla dignissimos numquam et.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (9, 2, 2, NULL, 'Doloribus quo qui consequuntur. Ab vel quia maxime qui nostrum consequatur hic. Omnis sed ipsa unde officia. Amet perferendis quia est sint aut quo laborum eius.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (10, 1, 2, NULL, 'Qui at aliquam inventore ullam. Quasi officiis adipisci at eum beatae et reiciendis qui. Ipsam est earum recusandae id.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (11, 4, 4, NULL, 'Sit perspiciatis facere corrupti recusandae et. Reiciendis quod et sit maiores. Ullam minus possimus quam voluptate at non nostrum. Amet mollitia non voluptatibus non commodi ut cum.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (12, 4, 3, NULL, 'Commodi magni error vero vel tempora labore facere. Doloremque maxime sint aliquid quas et nulla maiores. Iure expedita laudantium itaque voluptas tempore omnis necessitatibus at. Aut cumque eaque sunt deserunt.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (13, 4, 3, NULL, 'Dolor vel sequi eos et ut quia. Tempore optio voluptatem qui est ut. Vel vel perspiciatis voluptas dolorum quo quod autem. Molestias et in sapiente et exercitationem vel.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (14, 3, 2, NULL, 'At est asperiores aut voluptate. Maiores odio labore aut quod praesentium animi sequi. Sit explicabo expedita perferendis ut nam excepturi.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (15, 3, 5, NULL, 'Voluptas possimus sed reprehenderit qui. Reprehenderit commodi cupiditate veniam incidunt eveniet. Aut vel voluptatibus nam sequi dolorem maxime quasi.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (16, 1, 2, NULL, 'Fuga repellat quis quibusdam atque laborum aperiam maiores voluptas. Aut id consectetur dolorem dolorem. Sunt sit vitae ducimus id voluptas. Distinctio vel voluptatem porro fugit.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (17, 2, 2, NULL, 'Quasi dignissimos tenetur sed voluptatem ullam. Quasi cumque excepturi vero velit.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (18, 1, 5, NULL, 'Quo magnam adipisci vitae in accusantium. Sunt occaecati autem cupiditate et odit. Sunt et quia eligendi est. Qui aut reiciendis dolores ut.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (19, 1, 5, NULL, 'Maxime dignissimos ut corporis et. Consectetur aliquam minima odit numquam non. Molestiae ex aut deserunt asperiores alias.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `comments` VALUES (20, 4, 4, NULL, 'Sed ipsum et dicta saepe consequatur id possimus. Ut quis doloremque consequatur alias vel. Atque minima magnam in eos iure sunt dolore.', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
+INSERT INTO `comments` VALUES (1, 3, 1, NULL, 'Consequatur commodi iure ex voluptatem quas. Nostrum voluptates quam sit error. Maiores quod cumque autem iste quae quod aut.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (2, 4, 4, NULL, 'Ut dignissimos alias iusto et ut quisquam aliquam odit. Impedit quia adipisci rem non atque. Labore beatae soluta aut.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (3, 4, 5, NULL, 'Qui sint eum velit incidunt reiciendis fugit ut. Tempora architecto fugiat sed. Ratione et neque et voluptas non aut ut ducimus. Provident perferendis dolor numquam aut iusto sint.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (4, 3, 4, NULL, 'Amet sunt aut voluptatem rem. Est dolor aut id magni corrupti minima.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (5, 3, 3, NULL, 'Repellat non nam nostrum quis. Nobis iste sed quam. Et illum eos aliquam iure. Mollitia rerum aut numquam quibusdam magni qui qui. Voluptas non quia qui voluptatem molestiae qui nobis quidem.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (6, 4, 5, NULL, 'Incidunt ratione dolorum quo excepturi ipsum. Aut aperiam asperiores ut est. Reiciendis odio repellendus sit fuga ipsa sed accusantium.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (7, 4, 3, NULL, 'Qui assumenda placeat id tenetur. Vitae et placeat vel qui et. Voluptatem debitis a incidunt sed aperiam qui nostrum recusandae.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (8, 4, 3, NULL, 'Adipisci est fugiat itaque. Est soluta molestias praesentium omnis consectetur dolor enim voluptate. Architecto eum facilis fugiat fugit sunt ducimus.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (9, 3, 5, NULL, 'Placeat non aut earum necessitatibus sit quo esse. Et excepturi quia iusto numquam id aperiam quas. Blanditiis est qui et placeat numquam. Non dolores deleniti ut adipisci soluta nostrum soluta.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (10, 4, 5, NULL, 'Impedit aliquid in at excepturi reiciendis. Officiis dolorem veritatis ut voluptas vel consequatur placeat. Non aut sint praesentium nostrum necessitatibus quibusdam reprehenderit.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (11, 2, 4, NULL, 'Adipisci voluptates tenetur ipsam eligendi nihil optio laborum quisquam. Vero illo perspiciatis debitis iusto earum est ad. Quia dicta vel dolore velit molestiae.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (12, 3, 2, NULL, 'Explicabo consequuntur molestias eaque molestiae voluptatum porro. Qui consectetur accusantium soluta ducimus saepe officia rerum recusandae. Maiores ab error rerum omnis cum totam nemo. Ullam voluptatem officia deleniti fugiat provident sapiente.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (13, 4, 5, NULL, 'Quam et excepturi ratione cumque. Dolor eum sint maiores occaecati in qui sunt. Eos quasi totam quia cumque pariatur architecto non.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (14, 1, 5, NULL, 'Sint et sequi libero incidunt voluptas voluptatem voluptate. Voluptas reprehenderit reprehenderit qui libero suscipit. Libero soluta mollitia nulla sint mollitia omnis quaerat distinctio. Ducimus voluptatibus qui eius necessitatibus. Esse earum rerum quo numquam quos.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (15, 1, 2, NULL, 'Voluptatum et rerum deleniti corrupti libero expedita. Quo ea odit nobis dolor doloremque ipsam. Neque commodi harum vel odit nobis. Tempore suscipit nostrum enim ad dolorem et tempore maxime.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (16, 2, 3, NULL, 'Inventore ut unde eos. Officiis iusto dolorum et exercitationem et nihil. Reprehenderit sunt aut tempore quod nostrum quidem ipsa. Et voluptatem officiis qui adipisci provident.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (17, 4, 3, NULL, 'Aut occaecati a qui. Sit consequatur qui sed quidem.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (18, 3, 5, NULL, 'Quidem sequi rerum optio nihil qui. Et unde necessitatibus corporis id provident. Enim dolorem qui quis ipsum a neque libero. Consectetur quisquam aliquam deleniti corporis.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (19, 3, 1, NULL, 'Rem rerum omnis quisquam corporis. Delectus rerum iusto accusamus rerum vitae. Provident maxime id ratione repellendus aperiam est sunt fugiat.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `comments` VALUES (20, 1, 4, NULL, 'Modi sit numquam sit temporibus. Distinctio eius et similique eos adipisci ut. Error accusantium error ut eius fuga consequatur velit pariatur.', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
 
 -- ----------------------------
 -- Table structure for complaint_categories
@@ -112,14 +109,14 @@ CREATE TABLE `complaint_categories`  (
 -- ----------------------------
 -- Records of complaint_categories
 -- ----------------------------
-INSERT INTO `complaint_categories` VALUES (1, 'ut', 'ut', 'Aut consectetur dolor delectus maiores.', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `complaint_categories` VALUES (2, 'quia', 'quia', 'Natus ab est accusamus ea.', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `complaint_categories` VALUES (3, 'deleniti', 'deleniti', 'Atque itaque ipsa non nostrum repellat quod.', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `complaint_categories` VALUES (4, 'eius', 'eius', 'Rerum id mollitia aspernatur.', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `complaint_categories` VALUES (5, 'fugit', 'fugit', 'Quo aut velit natus sit vero nihil velit et.', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `complaint_categories` VALUES (6, 'laborum', 'laborum', 'Sed cum aut voluptates voluptatem nemo.', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `complaint_categories` VALUES (7, 'quas', 'quas', 'Repudiandae inventore nisi officiis in ad in perferendis.', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `complaint_categories` VALUES (8, 'laboriosam', 'laboriosam', 'Provident et explicabo voluptatem laudantium consequuntur.', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
+INSERT INTO `complaint_categories` VALUES (1, 'Safe Guarding', 'safe-guarding', 'Complaints about the safety or well-being of a child or vulnerable adult', NULL, NULL);
+INSERT INTO `complaint_categories` VALUES (2, 'Ethical and Moral Concerns', 'ethical-and-moral-concerns', 'Complaints about the ethical or moral conduct of a member of staff', NULL, NULL);
+INSERT INTO `complaint_categories` VALUES (3, 'Legal Concerns', 'legal-concerns', 'Complaints about the legal conduct of a member of staff', NULL, NULL);
+INSERT INTO `complaint_categories` VALUES (4, 'Financial Concerns', 'financial-concerns', 'Complaints about the financial conduct of a member of staff', NULL, NULL);
+INSERT INTO `complaint_categories` VALUES (5, 'Impact', 'impact', 'Complaints about the impact of a member of staff\'s conduct on the complainant', NULL, NULL);
+INSERT INTO `complaint_categories` VALUES (6, 'Communication and Information', 'communication-and-information', 'Complaints about the communication and information provided by a member of staff', NULL, NULL);
+INSERT INTO `complaint_categories` VALUES (7, 'Project and Service Quality', 'project-and-service-quality', 'Complaints about the quality of a project or service', NULL, NULL);
+INSERT INTO `complaint_categories` VALUES (8, 'Health and Safety', 'health-and-safety', 'Complaints about the health and safety of a project or service', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for complaints
@@ -159,15 +156,16 @@ CREATE TABLE `complaints`  (
   CONSTRAINT `complaints_complaint_category_id_foreign` FOREIGN KEY (`complaint_category_id`) REFERENCES `complaint_categories` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT,
   CONSTRAINT `complaints_district_id_foreign` FOREIGN KEY (`district_id`) REFERENCES `districts` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT,
   CONSTRAINT `complaints_region_id_foreign` FOREIGN KEY (`region_id`) REFERENCES `regions` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of complaints
 -- ----------------------------
-INSERT INTO `complaints` VALUES (1, NULL, 'CID7631', 'Donald', NULL, 'Miller', 'koss.emile@example.org', '(669) 678-9537', 'female', '66+', 12, 135, 'public', 'grievance', 'In at sunt quia modi voluptas voluptatem rerum quae. Accusamus beatae tenetur id inventore veniam sed assumenda modi. Aut velit ipsa ratione et modi cum. Dolorem dignissimos eligendi voluptatem adipisci qui et totam. Dolorum consequuntur et optio quia numquam officiis.', NULL, 0, 0, NULL, 'field_visit', 0, 'forwarded', NULL, '2023-08-26 12:07:25', '2023-08-26 12:40:21');
-INSERT INTO `complaints` VALUES (2, NULL, 'CID5272', 'Billy', NULL, 'Larson', 'kessler.kiara@example.org', '+1-859-886-5311', 'female', '18-35', 4, 231, 'student', 'grievance', 'Molestiae molestiae autem ipsam consequatur a tempore. Architecto totam aut quos quis non. Omnis et deserunt repellat ex magni ad omnis. Cupiditate beatae similique commodi dolor ducimus.', NULL, 0, 0, NULL, 'field_visit', 0, 'resolved', NULL, '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `complaints` VALUES (3, NULL, 'CID1923', 'Paul', NULL, 'Oberbrunner', 'cedrick.sawayn@example.org', '+1 (470) 716-7408', 'female', '36-50', 2, 168, 'staff', 'feedback', 'Voluptas officiis numquam odit nobis ratione pariatur sed. Rerum recusandae ut ratione ipsum alias corrupti. Et voluptatum amet officia. Et fuga est et.', NULL, 0, 0, NULL, 'email', 1, 'closed', NULL, '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `complaints` VALUES (4, NULL, 'CID4754', 'Una', NULL, 'Mraz', 'hand.francesca@example.org', '913-231-6004', 'male', '51-65', 8, 48, 'student', 'recommendation', 'Eum qui et error beatae voluptas placeat reiciendis. Quidem veniam consequatur at adipisci non debitis commodi. Quos blanditiis vel expedita et perspiciatis ab rerum. In in laborum maiores est aliquam.', NULL, 0, 0, NULL, 'email', 1, 'resolved', NULL, '2023-08-26 12:07:25', '2023-08-26 12:07:25');
+INSERT INTO `complaints` VALUES (1, NULL, 'CID6491', 'Richmond', NULL, 'Friesen', 'osinski.angelina@example.net', '+18032248214', 'female', '0-17', 2, 24, 'student', 'complaint', 'Est vero quam officia et sunt alias laudantium quia. Ipsam molestiae nam sit minus accusamus. Sint voluptatem alias corporis aut.', NULL, 1, 0, NULL, 'field_visit', 0, 'pending', NULL, '2023-08-26 19:15:26', '2023-08-26 19:15:26');
+INSERT INTO `complaints` VALUES (2, NULL, 'CID8812', 'Guy', NULL, 'Dibbert', 'simonis.carmela@example.org', '1-352-917-7876', 'male', '0-17', 3, 206, 'student', 'feedback', 'Perferendis sed voluptas mollitia consequatur quia. Sed sit deserunt eum velit accusantium dolore eum. Dolorem recusandae et sed.', NULL, 0, 0, NULL, 'email', 0, 'closed', NULL, '2023-08-26 19:15:26', '2023-08-26 19:15:26');
+INSERT INTO `complaints` VALUES (3, NULL, 'CID6513', 'Eino', NULL, 'Goodwin', 'pwuckert@example.org', '(563) 324-7716', 'male', '0-17', 7, 209, 'staff', 'feedback', 'Aut vel amet dolores odit praesentium repellat. Nihil iure nulla voluptas cum corrupti odio impedit. Voluptatem dicta aspernatur magni numquam. Aut nihil sequi aut. Est minus est illum quia quia praesentium.', NULL, 1, 0, NULL, 'email', 1, 'closed', NULL, '2023-08-26 19:15:26', '2023-08-26 19:15:26');
+INSERT INTO `complaints` VALUES (4, NULL, 'CID3564', 'Madaline', NULL, 'Orn', 'mlakin@example.net', '640-383-8301', 'female', '51-65', 7, 223, 'public', 'feedback', 'Quia labore rerum aliquid qui et. Eum possimus unde et quae aperiam. Possimus quod qui ipsam quibusdam.', NULL, 0, 0, NULL, 'field_visit', 0, 'closed', NULL, '2023-08-26 19:15:26', '2023-08-26 19:15:26');
+INSERT INTO `complaints` VALUES (5, 5, 'CID295', 'A', 'Better', 'Name', 'kuvoz@mailinator.com', '15216949702', 'male', NULL, 9, 191, 'staff', 'recommendation', 'Minus deserunt tempo', NULL, 0, 0, NULL, 'whatsapp', 1, 'pending', NULL, '2023-08-26 19:15:47', '2023-08-26 19:17:44');
 
 -- ----------------------------
 -- Table structure for districts
@@ -455,11 +453,11 @@ CREATE TABLE `divisions`  (
 -- ----------------------------
 -- Records of divisions
 -- ----------------------------
-INSERT INTO `divisions` VALUES (1, 'Christa Ledner', 'favournwevo@gmail.com', 'Luis West Jr.', '281-272-2640', 'weber.virginie@satterfield.com', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `divisions` VALUES (2, 'Dr. Hollis Lemke MD', 'favournwevo@gmail.com', 'Breanne Lowe', '480.684.8313', 'anibal.douglas@yahoo.com', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `divisions` VALUES (3, 'Aniyah Dooley', 'favournwevo@gmail.com', 'Ms. Ciara Zemlak IV', '+1-732-616-3569', 'lulu.hane@yahoo.com', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `divisions` VALUES (4, 'Eldon O\'Connell', 'favournwevo@gmail.com', 'Clair Grimes', '+1-385-959-0406', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `divisions` VALUES (5, 'Dr. Letitia Fahey DVM', 'favournwevo@gmail.com', 'Lorena Hahn', '+1 (360) 561-3242', 'eleanore.ledner@fahey.com', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
+INSERT INTO `divisions` VALUES (1, 'Gregory Haag', 'favournwevo@gmail.com', 'Miss Rosalinda Collier I', '1-860-979-6252', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `divisions` VALUES (2, 'Ilene Murphy', 'favournwevo@gmail.com', 'Carroll Grimes I', '+1-870-789-5978', 'cmante@predovic.org', '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `divisions` VALUES (3, 'Max Treutel', 'favournwevo@gmail.com', 'Leonor Rowe', '+17406331732', 'fanny49@orn.org', '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `divisions` VALUES (4, 'Prof. Jed Gorczany II', 'favournwevo@gmail.com', 'Ashlee Christiansen', '+1.586.849.5643', 'klocko.will@gmail.com', '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `divisions` VALUES (5, 'Daryl Kris Sr.', 'favournwevo@gmail.com', 'Eliseo Kris', '+18454590850', 'allan62@yahoo.com', '2023-08-26 19:15:27', '2023-08-26 19:15:27');
 
 -- ----------------------------
 -- Table structure for failed_jobs
@@ -573,41 +571,43 @@ CREATE TABLE `permissions`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `permissions_name_guard_name_unique`(`name` ASC, `guard_name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of permissions
 -- ----------------------------
-INSERT INTO `permissions` VALUES (1, 'dashboard', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (2, 'users.list', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (3, 'users.create', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (4, 'users.edit', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (5, 'users.delete', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (6, 'roles.list', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (7, 'roles.create', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (8, 'roles.edit', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (9, 'regions.list', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (10, 'regions.create', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (11, 'regions.edit', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (12, 'regions.delete', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (13, 'district.list', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (14, 'district.create', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (15, 'district.delete', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (16, 'complaint.create', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (17, 'complaint.view', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (18, 'complaint.comment', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (19, 'complaint.reply', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (20, 'complaint.forward', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (21, 'division.list', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (22, 'division.create', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (23, 'division.edit', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (24, 'division.delete', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (25, 'unit.list', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (26, 'unit.create', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (27, 'unit.edit', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (28, 'unit.delete', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (29, 'activity.list', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `permissions` VALUES (30, 'activity.clear', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
+INSERT INTO `permissions` VALUES (1, 'dashboard.view', 'web', '2023-08-26 19:15:24', '2023-08-26 19:15:24');
+INSERT INTO `permissions` VALUES (2, 'users.list', 'web', '2023-08-26 19:15:24', '2023-08-26 19:15:24');
+INSERT INTO `permissions` VALUES (3, 'users.create', 'web', '2023-08-26 19:15:24', '2023-08-26 19:15:24');
+INSERT INTO `permissions` VALUES (4, 'users.edit', 'web', '2023-08-26 19:15:24', '2023-08-26 19:15:24');
+INSERT INTO `permissions` VALUES (5, 'users.delete', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (6, 'roles.list', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (7, 'roles.create', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (8, 'roles.edit', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (9, 'regions.list', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (10, 'regions.create', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (11, 'regions.edit', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (12, 'regions.delete', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (13, 'districts.list', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (14, 'districts.create', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (15, 'districts.delete', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (16, 'complaints.list', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (17, 'complaints.create', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (18, 'complaints.view', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (19, 'complaints.comment', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (20, 'complaints.reply', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (21, 'complaints.forward', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (22, 'divisions.list', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (23, 'divisions.create', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (24, 'divisions.edit', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (25, 'divisions.delete', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (26, 'units.list', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (27, 'units.create', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (28, 'units.edit', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (29, 'units.delete', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (30, 'activity_logs.list', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (31, 'activity_logs.view', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `permissions` VALUES (32, 'activity_logs.clear', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
 
 -- ----------------------------
 -- Table structure for personal_access_tokens
@@ -708,6 +708,8 @@ INSERT INTO `role_has_permissions` VALUES (27, 1);
 INSERT INTO `role_has_permissions` VALUES (28, 1);
 INSERT INTO `role_has_permissions` VALUES (29, 1);
 INSERT INTO `role_has_permissions` VALUES (30, 1);
+INSERT INTO `role_has_permissions` VALUES (31, 1);
+INSERT INTO `role_has_permissions` VALUES (32, 1);
 
 -- ----------------------------
 -- Table structure for roles
@@ -726,9 +728,9 @@ CREATE TABLE `roles`  (
 -- ----------------------------
 -- Records of roles
 -- ----------------------------
-INSERT INTO `roles` VALUES (1, 'admin', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `roles` VALUES (2, 'client_users', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `roles` VALUES (3, 'divisional_reps', 'web', '2023-08-26 12:07:25', '2023-08-26 12:07:25');
+INSERT INTO `roles` VALUES (1, 'admin', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `roles` VALUES (2, 'client_users', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `roles` VALUES (3, 'divisional_reps', 'web', '2023-08-26 19:15:25', '2023-08-26 19:15:25');
 
 -- ----------------------------
 -- Table structure for units
@@ -749,11 +751,11 @@ CREATE TABLE `units`  (
 -- ----------------------------
 -- Records of units
 -- ----------------------------
-INSERT INTO `units` VALUES (1, 'Bonita Olson', 'omegakaka1315@gmail.com', 'Wilton Prohaska PhD', '520.919.4965', 'purdy.berniece@yahoo.com', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `units` VALUES (2, 'Audie Haag', 'omegakaka1315@gmail.com', 'Emerald Jacobi I', '818.499.3237', NULL, '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `units` VALUES (3, 'Maymie McLaughlin', 'omegakaka1315@gmail.com', 'Kianna Kemmer', '(973) 644-0303', 'stamm.emanuel@jacobi.org', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `units` VALUES (4, 'Mr. Isadore Weissnat II', 'omegakaka1315@gmail.com', 'Prof. Ebony Conroy', '(478) 315-2394', 'juliana62@kassulke.com', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
-INSERT INTO `units` VALUES (5, 'Emmalee Tremblay', 'omegakaka1315@gmail.com', 'Ms. Lorena Schulist', '+1 (283) 238-0748', 'fhuel@gmail.com', '2023-08-26 12:07:26', '2023-08-26 12:07:26');
+INSERT INTO `units` VALUES (1, 'Roscoe Ferry', 'omegakaka1315@gmail.com', 'Kavon Vandervort V', '+1-336-714-4523', 'hkonopelski@hotmail.com', '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `units` VALUES (2, 'Morgan Reichel', 'omegakaka1315@gmail.com', 'Emerson Lakin', '+1.660.545.6645', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `units` VALUES (3, 'Michele Rau', 'omegakaka1315@gmail.com', 'Ruthie Pfeffer', '(727) 845-0068', NULL, '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `units` VALUES (4, 'Vida Rodriguez', 'omegakaka1315@gmail.com', 'Mr. Jakob Rath', '1-754-938-4003', 'nheaney@christiansen.com', '2023-08-26 19:15:27', '2023-08-26 19:15:27');
+INSERT INTO `units` VALUES (5, 'Tanner Hilpert', 'omegakaka1315@gmail.com', 'Deon Hane', '+1-847-848-8774', 'leannon.jacklyn@towne.biz', '2023-08-26 19:15:27', '2023-08-26 19:15:27');
 
 -- ----------------------------
 -- Table structure for users
@@ -778,10 +780,10 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'Super Admin', 'Super', 'Admin', 'admin@admin.com', '2023-08-26 12:07:25', '$2y$10$gUgoD5pBv./DiQdgUqTsl.AfCOGF2.zwn/5raV5d4bjnkspWYS88u', 'AjqWD28a0s', NULL, '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `users` VALUES (2, 'Henri Schaden', 'Eldridge', 'Shields', 'tlowe@example.net', '2023-08-26 12:07:25', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'WQ5Rew1Bvd', NULL, '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `users` VALUES (3, 'Charity Ruecker', 'Wallace', 'Hansen', 'nelson.daugherty@example.net', '2023-08-26 12:07:25', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'OMa9YUgwkq', NULL, '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `users` VALUES (4, 'Lelah Ruecker', 'Kaden', 'Parisian', 'smitham.krystel@example.com', '2023-08-26 12:07:25', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'JbhkJKTGwJ', NULL, '2023-08-26 12:07:25', '2023-08-26 12:07:25');
-INSERT INTO `users` VALUES (5, 'Vance Hammes', 'Elouise', 'Considine', 'mlittel@example.com', '2023-08-26 12:07:25', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'FLAK41LZJs', NULL, '2023-08-26 12:07:25', '2023-08-26 12:07:25');
+INSERT INTO `users` VALUES (1, 'Super Admin', 'Super', 'Admin', 'admin@admin.com', '2023-08-26 19:15:25', '$2y$10$oBBsJEmHwwHDB2qXKlY91.3e4RHD2cA9K73MbkzcMUS9JBBYvPIjS', '5B2d7GQtIT', NULL, '2023-08-26 19:15:25', '2023-08-26 19:15:25');
+INSERT INTO `users` VALUES (2, 'Dr. Alvah Toy', 'Reva', 'Ondricka', 'kertzmann.noble@example.com', '2023-08-26 19:15:26', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '0pouGFQ1QX', NULL, '2023-08-26 19:15:26', '2023-08-26 19:15:26');
+INSERT INTO `users` VALUES (3, 'Mrs. Crystel Wiegand', 'Edward', 'Koepp', 'foconnell@example.org', '2023-08-26 19:15:26', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '88cSNJBP54', NULL, '2023-08-26 19:15:26', '2023-08-26 19:15:26');
+INSERT INTO `users` VALUES (4, 'Eloy Roob', 'Ola', 'Glover', 'ilene.medhurst@example.net', '2023-08-26 19:15:26', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'OvmbTbBmuw', NULL, '2023-08-26 19:15:26', '2023-08-26 19:15:26');
+INSERT INTO `users` VALUES (5, 'Martina Jaskolski', 'Tanya', 'Kohler', 'gilda.schuppe@example.net', '2023-08-26 19:15:26', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'OzhF9Cd14u', NULL, '2023-08-26 19:15:26', '2023-08-26 19:15:26');
 
 SET FOREIGN_KEY_CHECKS = 1;

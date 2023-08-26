@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
-	use HasRoles;
+	use HasRoles, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -52,6 +54,21 @@ class User extends Authenticatable
 	public function getFullNameAttribute(): string
 	{
 		return $this->first_name . ' ' . $this->last_name;
+	}
+
+	public function getActivitylogOptions(): LogOptions
+	{
+		return LogOptions::defaults()
+			->logOnly([
+				'name',
+				'first_name',
+				'last_name',
+				'email',
+			])
+			->logOnlyDirty()
+			->setDescriptionForEvent(fn (string $eventName) =>  "This Record has been {$eventName} by user: " . auth()->user()?->name ?? 'Unknown')
+			->useLogName('User Activity Log')
+			->dontSubmitEmptyLogs();
 	}
 
 	public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
