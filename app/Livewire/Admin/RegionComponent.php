@@ -1,0 +1,132 @@
+<?php
+
+namespace App\Livewire\Admin;
+
+use Livewire\Component;
+use Livewire\WithPagination;
+
+class RegionComponent extends Component
+{
+	use WithPagination;
+
+	protected $paginationTheme = 'bootstrap';
+
+	public $search;
+
+	protected $queryString = ['search'];
+
+	public $region_id;
+	public $region_name;
+	public $districts;
+	public $district_name = [];
+
+    public function render()
+    {
+        return view('livewire.admin.region-component',[
+			'regions' => \App\Models\Region::withCount('districts')
+				->oldest('name')
+				->where('name', 'like', '%'.$this->search.'%')
+				->paginate(10),
+        ])->extends('layouts.app');
+    }
+
+	public function addDistrict()
+	{
+		$this->district_name[] = '';
+	}
+
+	public function removeDistrict($index)
+	{
+		unset($this->district_name[$index]);
+
+		$this->district_name = array_values($this->district_name);
+	}
+
+	public function store()
+	{
+		$this->validate([
+			'region_name' => 'required|unique:regions,name',
+			'district_name.*' => 'required',
+		]);
+
+		$this_regions = \App\Models\Region::create([
+			'name' => $this->region_name,
+			'code' => strtoupper(substr($this->region_name, 0, 3)),
+		]);
+
+		if ($this->district_name !== []) {
+			// attach districts to region
+			foreach ($this->district_name as $district_name) {
+				\App\Models\District::create([
+					'region_id' => $this_regions->id,
+					'name' => $district_name,
+					'code' => strtoupper(substr($district_name, 0, 3)),
+				]);
+			}
+		}
+
+		$this->reset('region_name');
+
+		return redirect()->route('regions')->with('success', 'Region created successfully.');
+	}
+
+	public function edit($id)
+	{
+		$region = \App\Models\Region::findOrFail($id);
+		$this->region_id = $region->id;
+		$this->region_name = $region->name;
+		$this->districts = \App\Models\District::where('region_id', $region->id)->get();
+	}
+
+	public function update()
+	{
+		$this->validate([
+			'region_name' => 'required|unique:regions,name,'.$this->region_id,
+		]);
+
+		$region = \App\Models\Region::findOrFail($this->region_id);
+		$region->update([
+			'name' => $this->region_name,
+			'code' => strtoupper(substr($this->region_name, 0, 3)),
+		]);
+
+		if ($this->district_name !== []) {
+			// attach districts to region
+			foreach ($this->district_name as $district_name) {
+				\App\Models\District::create([
+					'region_id' => $region->id,
+					'name' => $district_name,
+					'code' => strtoupper(substr($district_name, 0, 3)),
+				]);
+			}
+		}
+
+		$this->reset('region_id', 'region_name');
+
+		return redirect()->route('regions')->with('success', 'Region updated successfully.');
+	}
+
+	public function delete($id)
+	{
+		$region = \App\Models\Region::findOrFail($id);
+
+		// check if region has districts
+		if ($region->districts->count() > 0) {
+			return redirect()->route('regions')->with('error', 'Region has districts. Delete districts first.');
+		}
+
+		$region->forceDelete();
+
+		return redirect()->route('regions')->with('success', 'Region deleted successfully.');
+	}
+
+	public function deleteDistrict($id)
+	{
+		$district = \App\Models\District::findOrFail($id);
+
+		$district->forceDelete();
+
+		$this->districts = \App\Models\District::where('region_id', $this->region_id)->get();
+//		return redirect()->route('regions')->with('success', 'District deleted successfully.');
+	}
+}
