@@ -86,6 +86,17 @@
 							<input type="text" class="form-control" id="age_range" disabled readonly wire:model="age_range">
 						</div>
 						
+						@include('flash-message')
+						<div class="col-md-12 mb-3">
+							<label for="complaint_category">Assign Category</label>
+							<select class="form-control" id="complaint_category" wire:model.lazy="complaint_category">
+								<option value="">Select Category</option>
+								@foreach($complaint_categories as $key => $complaint_category)
+									<option value="{{ $complaint_category->id }}">{{ $complaint_category->name }}</option>
+								@endforeach
+							</select>
+						</div>
+						
 					</div>
 					<hr>
 					<div class="row">
@@ -115,24 +126,26 @@
 						</div>
 					</div>
 					
-					@include('flash-message')
-					
-					<form wire:submit.prevent="submitComment">
-						<div class="row">
-							<div class="col-md-12 mb-3">
-								<label for="comment">Comment</label>
-								<textarea class="form-control" id="comment" rows="10" cols="20" placeholder="Comment your reply here!" required wire:model="comment"></textarea>
-								
-								@error('comment')
-								<span class="text-danger">{{ $message }}</span>
-								@enderror
-							</div>
-						</div>
+					@can('complaints.comment')
+						@include('flash-message')
 						
-						<button class="btn btn-info rounded-pill px-4 mt-3" type="submit" >
-							Submit Comment
-						</button>
-					</form>
+						<form wire:submit.prevent="submitComment">
+							<div class="row">
+								<div class="col-md-12 mb-3">
+									<label for="comment">Comment</label>
+									<textarea class="form-control" id="comment" rows="10" cols="20" placeholder="Comment your reply here!" required wire:model="comment"></textarea>
+									
+									@error('comment')
+									<span class="text-danger">{{ $message }}</span>
+									@enderror
+								</div>
+							</div>
+							
+							<button class="btn btn-info rounded-pill px-4 mt-3" type="submit" >
+								Submit Comment
+							</button>
+						</form>
+					@endcan
 				
 				</div>
 			

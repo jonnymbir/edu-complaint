@@ -31,14 +31,31 @@
 											       placeholder="Search by Complaint ID"
 											       wire:model.live.debounce.550ms="search"/>
 										</div>
-										
-										<!-- Button ========================= -->
-										<div class="col-auto d-flex align-items-center ml-auto form-group">
-											<button class="btn btn-primary btn-block" data-bs-toggle="modal"
-											        data-bs-target="#addComplaintModal" wire:click="resetForm">
-												Add New Complaint
+										<div class="col-sm-3 col-md-3 form-group">
+											<label for="search_category">Filter By Category</label>
+											<select class="form-control" wire:model.lazy="search_category">
+												<option value="">Select Category</option>
+												@foreach($complaint_categories as $complaint_category)
+													<option value="{{ $complaint_category->id }}">{{ $complaint_category->name }}</option>
+												@endforeach
+											</select>
+										</div>
+										<div class="col-sm-3 col-md-3 form-group">
+											<br>
+											<button class="btn btn-danger btn-block" wire:click="resetFilters">
+												<i class="fa fa-redo-alt"></i>
 											</button>
 										</div>
+										
+										@can('complaints.create')
+											<!-- Button ========================= -->
+											<div class="col-auto d-flex align-items-center ml-auto form-group">
+												<button class="btn btn-primary btn-block" data-bs-toggle="modal"
+												        data-bs-target="#addComplaintModal" wire:click="resetForm">
+													Add New Complaint
+												</button>
+											</div>
+										@endcan
 									
 									</div>
 								</div>
@@ -57,7 +74,9 @@
 									<th scope="col">Gender</th>
 									<th scope="col">Stakeholder Type</th>
 									<th scope="col">Creation Date</th>
-									<th scope="col">Action</th>
+									@if(auth()->user()->can('complaints.view') || auth()->user()->can('complaints.reply') || auth()->user()->can('complaints.forward'))
+										<th scope="col">Action</th>
+									@endif
 								</tr>
 								</thead>
 								<tbody>
@@ -70,27 +89,37 @@
 										<td>{{ $complaint->sex }}</td>
 										<td>{{ $complaint->stakeholder_type }}</td>
 										<td>{{ $complaint->created_at->format('dS M, Y') }}</td>
-										<td>
-											<div class="d-flex">
-												<button class="btn btn-sm btn-primary shadow btn-xs sharp me-1"
-												        data-bs-toggle="modal" data-bs-target="#viewComplaintModal"
-												        wire:click="view({{ $complaint->id }})">
-													<i class="fa fa-eye"></i>
-												</button>
-												<button class="btn btn-sm btn-warning shadow btn-xs sharp me-1"
-												        data-bs-toggle="modal" data-bs-target="#replyComplaintModal"
-												        wire:click="showCommentForm({{ $complaint->id }})">
-													<i class="fa fa-reply"></i>
-												</button>
-												@if(!$complaint->is_forwarded)
-													<button class="btn btn-sm btn-dark shadow btn-xs sharp me-1"
-													        data-bs-toggle="modal" data-bs-target="#forwardComplaintModal"
-													        wire:click="showCommentForm({{ $complaint->id }})">
-														<i class="fa fa-forward"></i>
-													</button>
-												@endif
-											</div>
-										</td>
+										@if(auth()->user()->can('complaints.view') || auth()->user()->can('complaints.reply') || auth()->user()->can('complaints.forward'))
+											<td>
+												<div class="d-flex">
+													@can('complaints.view')
+														<button class="btn btn-sm btn-primary shadow btn-xs sharp me-1"
+														        data-bs-toggle="modal" data-bs-target="#viewComplaintModal"
+														        wire:click="view({{ $complaint->id }})">
+															<i class="fa fa-eye"></i>
+														</button>
+													@endcan
+													
+													@can('complaints.reply')
+														<button class="btn btn-sm btn-warning shadow btn-xs sharp me-1"
+														        data-bs-toggle="modal" data-bs-target="#replyComplaintModal"
+														        wire:click="showCommentForm({{ $complaint->id }})">
+															<i class="fa fa-reply"></i>
+														</button>
+													@endcan
+													
+													@can('complaints.forward')
+														@if(!$complaint->is_forwarded)
+															<button class="btn btn-sm btn-dark shadow btn-xs sharp me-1"
+															        data-bs-toggle="modal" data-bs-target="#forwardComplaintModal"
+															        wire:click="showCommentForm({{ $complaint->id }})">
+																<i class="fa fa-forward"></i>
+															</button>
+														@endif
+													@endcan
+												</div>
+											</td>
+										@endif
 									</tr>
 								@endforeach
 								</tbody>
@@ -105,10 +134,21 @@
 			</div>
 		</section>
 		
-		@include('livewire.admin.modals.Complaints.create-complaint')
-		@include('livewire.admin.modals.Complaints.view-complaint')
-		@include('livewire.admin.modals.Complaints.reply-complaint')
-		@include('livewire.admin.modals.Complaints.forward-complaint')
+		@can('complaints.create')
+			@include('livewire.admin.modals.Complaints.create-complaint')
+		@endcan
+		
+		@can('complaints.view')
+			@include('livewire.admin.modals.Complaints.view-complaint')
+		@endcan
+		
+		@can('complaints.reply')
+			@include('livewire.admin.modals.Complaints.reply-complaint')
+		@endcan
+		
+		@can('complaints.forward')
+			@include('livewire.admin.modals.Complaints.forward-complaint')
+		@endcan
 	
 	</div>
 

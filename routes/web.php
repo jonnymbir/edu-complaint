@@ -31,7 +31,9 @@ Route::get('/logout', function () {
 Route::group(['middleware' => ['auth']], static function (){
 	Route::get('/', \App\Livewire\Admin\DashboardComponent::class)->name('dashboard');
 	Route::get('/users', \App\Livewire\Admin\UserComponent::class)->name('users');
+	Route::get('/roles', \App\Livewire\Admin\RoleComponent::class)->name('roles');
 	Route::get('/regions', \App\Livewire\Admin\RegionComponent::class)->name('regions');
 	Route::get('/complaint', \App\Livewire\Admin\ComplaintComponent::class)->name('complaints');
-	Route::get('/roles', \App\Livewire\Admin\RoleComponent::class)->name('roles');
+	Route::get('/divisions', \App\Livewire\Admin\DivisionComponent::class)->name('divisions');
+	Route::get('/units', \App\Livewire\Admin\UnitComponent::class)->name('units');
 });

@@ -31,9 +31,11 @@
 										
 										<!-- Button ========================= -->
 										<div class="col-auto d-flex align-items-center ml-auto form-group">
-											<button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#addUserModal">
-												Add User
-											</button>
+											@can('users.create')
+												<button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#addUserModal">
+													Add User
+												</button>
+											@endcan
 										</div>
 									
 									</div>
@@ -51,7 +53,9 @@
 									<th scope="col">Email</th>
 									<th scope="col">Roles</th>
 									<th scope="col">Creation Date</th>
-									<th scope="col">Action</th>
+									@if(auth()->user()->can('users.edit') || auth()->user()->can('users.delete'))
+										<th scope="col">Action</th>
+									@endif
 								</tr>
 								</thead>
 								<tbody>
@@ -66,17 +70,24 @@
 											@endforeach
 										</td>
 										<td>{{ $user->created_at->format('dS M, Y') }}</td>
-										<td>
-											<div class="d-flex">
-												<button class="btn btn-sm btn-primary shadow btn-xs sharp me-1" data-bs-toggle="modal" data-bs-target="#editUserModal" wire:click="edit({{ $user->id }})">
-													<i class="fa fa-pencil-alt"></i>
-												</button>
-												<button class="btn btn-sm btn-danger shadow btn-xs sharp" onclick="confirm('Are you sure you want to delete this user?') || event.stopImmediatePropagation()"
-												        wire:click="delete({{ $user->id }})">
-													<i class="fa fa-trash"></i>
-												</button>
-											</div>
-										</td>
+										@if(auth()->user()->can('users.edit') || auth()->user()->can('users.delete'))
+											<td>
+												<div class="d-flex">
+													@can('users.edit')
+														<button class="btn btn-sm btn-primary shadow btn-xs sharp me-1" data-bs-toggle="modal" data-bs-target="#editUserModal" wire:click="edit({{ $user->id }})">
+															<i class="fa fa-pencil-alt"></i>
+														</button>
+													@endcan
+													
+													@can('users.delete')
+														<button class="btn btn-sm btn-danger shadow btn-xs sharp" onclick="confirm('Are you sure you want to delete this user?') || event.stopImmediatePropagation()"
+														        wire:click="delete({{ $user->id }})">
+															<i class="fa fa-trash"></i>
+														</button>
+													@endcan
+												</div>
+											</td>
+										@endif
 									</tr>
 								@endforeach
 								</tbody>
@@ -91,8 +102,13 @@
 			</div>
 		</section>
 		
-		@include('livewire.admin.modals.Users.create-user')
-		@include('livewire.admin.modals.Users.edit-user')
+		@can('users.create')
+			@include('livewire.admin.modals.Users.create-user')
+		@endcan
+		
+		@can('users.edit')
+			@include('livewire.admin.modals.Users.edit-user')
+		@endcan
 		
 	</div>
 </div>

@@ -45,7 +45,7 @@
 							
 								<div class="col-md-6 mb-3">
 									<label for="div_email">Division Email</label>
-									<input type="text" class="form-control" id="div_email" disabled readonly placeholder="Division" wire:model.lazy="div_email">
+									<input type="text" class="form-control" id="div_email" disabled readonly placeholder="Email for this Division" wire:model.lazy="div_email">
 									
 									@error('div_email')
 									<span class="text-danger">{{ $message }}</span>
@@ -70,7 +70,7 @@
 								
 								<div class="col-md-6 mb-3">
 									<label for="unit_email">Unit Email</label>
-									<input type="text" class="form-control" id="unit_email" disabled readonly placeholder="Division" wire:model.lazy="unit_email">
+									<input type="text" class="form-control" id="unit_email" disabled readonly placeholder="Email for this Unit" wire:model.lazy="unit_email">
 									
 									@error('unit_email')
 									<span class="text-danger">{{ $message }}</span>
@@ -80,7 +80,7 @@
 							
 							<div class="col-md-12 mb-3">
 								<label for="cc">CC</label>
-								<input type="text" class="form-control" name="cc" id="cc" placeholder="CC" wire:model.lazy="cc">
+								<textarea class="form-control" rows="5" name="cc" id="cc" placeholder="CC" required wire:model="cc"></textarea>
 								<small class="text-muted">Separate emails with comma</small>
 								
 								@error('cc')

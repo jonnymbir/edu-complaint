@@ -24,7 +24,8 @@
 								@enderror
 							</div>
 							
-							<div class="accordion" id="accordionExample">
+							@can('districts.list')
+								<div class="accordion" id="accordionExample">
 								<div class="accordion-item">
 									<h2 class="accordion-header" id="headingOne">
 										<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
@@ -59,25 +60,31 @@
 														<span class="text-danger">{{ $message }}</span>
 														@enderror
 													</div>
-													{{-- remove button for each newly added inputs --}}
-													<div class="col-md-12 mb-3">
-														<button class="btn btn-danger btn-sm" wire:click.prevent="removeDistrict({{ $i }})">
-															<i class="fa fa-minus"></i>
-														</button>
-													</div>
+												
+													@can('districts.delete')
+														{{-- remove button for each newly added inputs --}}
+														<div class="col-md-12 mb-3">
+															<button class="btn btn-danger btn-sm" wire:click.prevent="removeDistrict({{ $i }})">
+																<i class="fa fa-minus"></i>
+															</button>
+														</div>
+													@endcan
 												@endfor
 											@endif
 											
-											<div class="col-md-12 mb-3">
-												<button class="btn btn-primary btn-sm" wire:click.prevent="addDistrict">
-													<i class="fa fa-plus"></i>
-												</button>
-											</div>
+											@can('districts.create')
+												<div class="col-md-12 mb-3">
+													<button class="btn btn-primary btn-sm" wire:click.prevent="addDistrict">
+														<i class="fa fa-plus"></i>
+													</button>
+												</div>
+											@endcan
 											
 										</div>
 									</div>
 								</div>
 							</div>
+							@endcan
 							
 						</div>
 					</div>

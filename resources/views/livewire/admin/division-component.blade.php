@@ -1,4 +1,4 @@
-@section('title', 'List Regions/Districts')
+@section('title', 'Divisions')
 
 <div>
 	
@@ -8,7 +8,7 @@
 		<!-- --------------------------------------------------- -->
 		@component('components.admin.bread-crum-component')
 			@slot('title')
-				List Regions/Districts
+				List Divisions
 			@endslot
 		@endcomponent
 		
@@ -27,11 +27,11 @@
 											<input type="text" class="form-control" placeholder="Search available parameters here" wire:model.live.debounce.550ms="search" />
 										</div>
 										
-										@can('regions.create')
+										@can('divisions.create')
 											<!-- Button ========================= -->
 											<div class="col-auto d-flex align-items-center ml-auto form-group">
-												<button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#addRegionModal">
-													Add Region
+												<button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#addDivisionModal">
+													Add Division
 												</button>
 											</div>
 										@endcan
@@ -47,33 +47,33 @@
 								<thead>
 								<tr>
 									<th scope="col">#</th>
-									<th scope="col">Region Name</th>
-									<th scope="col">Region Code</th>
-									<th scope="col">Number Of Districts</th>
-									@if(auth()->user()->can('regions.edit') || auth()->user()->can('regions.delete'))
+									<th scope="col">Division Name</th>
+									<th scope="col">Division Email</th>
+									<th scope="col">Contact Person</th>
+									@if(auth()->user()->can('divisions.edit') || auth()->user()->can('divisions.delete'))
 										<th scope="col">Action</th>
 									@endif
 								</tr>
 								</thead>
 								<tbody>
-								@foreach($regions as $key => $region)
+								@foreach($divisions as $key => $division)
 									<tr wire:key="{{ $key }}">
 										<th scope="row">{{ $key + 1 }}</th>
-										<td>{{ $region->name }}</td>
-										<td>{{ $region->code }}</td>
-										<td>{{ $region->districts_count }}</td>
-										@if(auth()->user()->can('regions.edit') || auth()->user()->can('regions.delete'))
+										<td>{{ $division->div_name }}</td>
+										<td>{{ $division->div_email }}</td>
+										<td>{{ $division->div_contact_person }}</td>
+										@if(auth()->user()->can('divisions.edit') || auth()->user()->can('divisions.delete'))
 											<td>
 												<div class="d-flex">
-													@can('regions.edit')
-														<button class="btn btn-sm btn-primary shadow btn-xs sharp me-1" data-bs-toggle="modal" data-bs-target="#editRegionModal" wire:click="edit({{ $region->id }})">
+													@can('divisions.edit')
+														<button class="btn btn-sm btn-primary shadow btn-xs sharp me-1" data-bs-toggle="modal" data-bs-target="#editDivisionModal" wire:click="edit({{ $division->id }})">
 															<i class="fa fa-pencil-alt"></i>
 														</button>
 													@endcan
 													
-													@can('regions.delete')
-														<button class="btn btn-sm btn-danger shadow btn-xs sharp" onclick="confirm('Are you sure you want to delete this region?') || event.stopImmediatePropagation()"
-														        wire:click="delete({{ $region->id }})">
+													@can('divisions.delete')
+														<button class="btn btn-sm btn-danger shadow btn-xs sharp" onclick="confirm('Are you sure you want to delete this division?') || event.stopImmediatePropagation()"
+														        wire:click="delete({{ $division->id }})">
 															<i class="fa fa-trash"></i>
 														</button>
 													@endcan
@@ -86,7 +86,7 @@
 							</table>
 							
 							<div class="mt-3">
-								{{ $regions->links() }}
+								{{ $divisions->links() }}
 							</div>
 						</div>
 					</div>
@@ -95,12 +95,12 @@
 			</div>
 		</section>
 		
-		@can('regions.create')
-			@include('livewire.admin.modals.Regions.create-region')
+		@can('divisions.create')
+			@include('livewire.admin.modals.Divisions.create-division')
 		@endcan
 		
-		@can('regions.edit')
-			@include('livewire.admin.modals.Regions.edit-region')
+		@can('divisions.edit')
+			@include('livewire.admin.modals.Divisions.edit-division')
 		@endcan
 	
 	</div>

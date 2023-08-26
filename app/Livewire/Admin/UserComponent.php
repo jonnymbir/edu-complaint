@@ -39,6 +39,8 @@ class UserComponent extends Component
 
 	public function store()
 	{
+		$this->authorize('users.create');
+
 		$this->validate([
 			'name' => 'required|min:3',
 			'first_name' => 'required|min:3',
@@ -58,6 +60,12 @@ class UserComponent extends Component
 
 		$user->assignRole($this->role);
 
+		activity()
+			->causedBy(auth()->user())
+			->performedOn($user)
+			->event('created user')
+			->log($user->name.' user was created by '.auth()->user()->name.'.');
+
 		$this->reset();
 
 		return redirect()->route('users')->with('success', 'User created successfully.');
@@ -65,6 +73,8 @@ class UserComponent extends Component
 
 	public function edit($id)
 	{
+		$this->authorize('users.edit');
+
 		$user = \App\Models\User::findOrFail($id);
 
 		$this->user_id = $user->id;
@@ -78,6 +88,8 @@ class UserComponent extends Component
 
 	public function update()
 	{
+		$this->authorize('users.edit');
+
 		$this->validate([
 			'name' => 'required|min:3',
 			'first_name' => 'required|min:3',
@@ -99,6 +111,12 @@ class UserComponent extends Component
 
 		$user->syncRoles($this->role);
 
+		activity()
+			->causedBy(auth()->user())
+			->performedOn($user)
+			->event('updated user')
+			->log($user->name.' user was updated by '.auth()->user()->name.'.');
+
 		$this->reset();
 
 		return redirect()->route('users')->with('success', 'User updated successfully.');
@@ -106,12 +124,26 @@ class UserComponent extends Component
 
 	public function delete($id)
 	{
+		$this->authorize('users.delete');
+
 		$user = \App\Models\User::findOrFail($id);
 
 		// check if user has any comments
 		if ($user->comments()->count() > 0) {
+			activity()
+				->causedBy(auth()->user())
+				->performedOn($user)
+				->event('delete attempt')
+				->log($user->name.' user was not deleted by '.auth()->user()->name.'. User has comment records.');
+
 			return redirect()->route('users')->with('error', 'User has comment records. Delete comments first.');
 		}
+
+		activity()
+			->causedBy(auth()->user())
+			->performedOn($user)
+			->event('deleted user')
+			->log($user->name.' user was deleted by '.auth()->user()->name.'.');
 
 		$user->forceDelete();
 

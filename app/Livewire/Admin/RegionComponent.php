@@ -44,6 +44,8 @@ class RegionComponent extends Component
 
 	public function store()
 	{
+		$this->authorize('regions.create');
+
 		$this->validate([
 			'region_name' => 'required|unique:regions,name',
 			'district_name.*' => 'required',
@@ -65,6 +67,12 @@ class RegionComponent extends Component
 			}
 		}
 
+		activity()
+			->causedBy(auth()->user())
+			->performedOn($this_regions)
+			->event('created region')
+			->log($this_regions->name.' region created successfully by '.auth()->user()->name);
+
 		$this->reset('region_name');
 
 		return redirect()->route('regions')->with('success', 'Region created successfully.');
@@ -72,6 +80,8 @@ class RegionComponent extends Component
 
 	public function edit($id)
 	{
+		$this->authorize('regions.edit');
+
 		$region = \App\Models\Region::findOrFail($id);
 		$this->region_id = $region->id;
 		$this->region_name = $region->name;
@@ -80,6 +90,8 @@ class RegionComponent extends Component
 
 	public function update()
 	{
+		$this->authorize('regions.edit');
+
 		$this->validate([
 			'region_name' => 'required|unique:regions,name,'.$this->region_id,
 		]);
@@ -101,6 +113,12 @@ class RegionComponent extends Component
 			}
 		}
 
+		activity()
+			->causedBy(auth()->user())
+			->performedOn($region)
+			->event('created region')
+			->log($region->name.' region updated successfully by '.auth()->user()->name);
+
 		$this->reset('region_id', 'region_name');
 
 		return redirect()->route('regions')->with('success', 'Region updated successfully.');
@@ -108,12 +126,20 @@ class RegionComponent extends Component
 
 	public function delete($id)
 	{
+		$this->authorize('regions.delete');
+
 		$region = \App\Models\Region::findOrFail($id);
 
 		// check if region has districts
 		if ($region->districts->count() > 0) {
 			return redirect()->route('regions')->with('error', 'Region has districts. Delete districts first.');
 		}
+
+		activity()
+			->causedBy(auth()->user())
+			->performedOn($region)
+			->event('updated region')
+			->log($region->name.' region deleted successfully by '.auth()->user()->name);
 
 		$region->forceDelete();
 
@@ -122,10 +148,22 @@ class RegionComponent extends Component
 
 	public function deleteDistrict($id)
 	{
+		$this->authorize('regions.delete');
+
+		// get district
 		$district = \App\Models\District::findOrFail($id);
 
+		// log activity
+		activity()
+			->causedBy(auth()->user())
+			->performedOn($district)
+			->event('deleted region')
+			->log($district->name.' district deleted successfully by '.auth()->user()->name);
+
+		// delete district
 		$district->forceDelete();
 
+		// refresh districts
 		$this->districts = \App\Models\District::where('region_id', $this->region_id)->get();
 //		return redirect()->route('regions')->with('success', 'District deleted successfully.');
 	}
