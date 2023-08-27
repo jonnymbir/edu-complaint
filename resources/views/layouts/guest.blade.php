@@ -6,6 +6,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	
+{{--	content security policy--}}
+	@if(app()->environment('production'))
+		<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+	@endif
+	
 	<title>{{ config('app.name') }} -  @yield('title', 'Enquiry')</title>
 	
 	<!-- Google fonts -->

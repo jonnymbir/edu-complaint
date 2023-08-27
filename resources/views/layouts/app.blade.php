@@ -6,7 +6,7 @@
 	<title>{{ config('app.name') }} -  @yield('title', 'Enquiry')</title>
 	<!--  Required Meta Tag -->
 	@if(app()->environment('production'))
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 	@endif
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
