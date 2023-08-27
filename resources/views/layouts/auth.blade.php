@@ -13,10 +13,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="handheld-friendly" content="true" />
 	<meta name="MobileOptimized" content="width" />
-	<meta name="description" content="OmegaSL Programming" />
-	<meta name="author" content="" />
-	<meta name="keywords" content="OmegaSL Programming" />
+	<meta name="description" content="GALOP-Ghana Accountability for Learning Outcomes Project" />
+	<meta name="author" content="GALOP-Ghana Accountability for Learning Outcomes Project" />
+	<meta name="keywords" content="GALOP,Ghana,Accountability for Learning,Outcomes, Project" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	
 	<!--  Favicon -->
 	<link rel="shortcut icon" type="image/png" href="{{ asset('dist/images/favicon.png') }}" />
 	<!-- Core Css -->

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<meta name="author" content="OmegaSL Programming">
+{{--	<meta http-equiv="content-type" content="text/html; charset=utf-8">--}}
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	
-{{--	content security policy--}}
+	<meta name="description" content="GALOP-Ghana Accountability for Learning Outcomes Project" />
+	<meta name="author" content="GALOP-Ghana Accountability for Learning Outcomes Project" />
+	<meta name="keywords" content="GALOP,Ghana,Accountability for Learning,Outcomes, Project" />
+	
+	{{--	content security policy--}}
 	@if(app()->environment('production'))
 		<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 	@endif
