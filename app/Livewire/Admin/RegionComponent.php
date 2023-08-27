@@ -22,7 +22,9 @@ class RegionComponent extends Component
 
     public function render()
     {
-        return view('livewire.admin.region-component',[
+	    $this->authorize('regions.list');
+
+	    return view('livewire.admin.region-component',[
 			'regions' => \App\Models\Region::withCount('districts')
 				->oldest('name')
 				->where('name', 'like', '%'.$this->search.'%')

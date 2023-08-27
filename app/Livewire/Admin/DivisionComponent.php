@@ -24,7 +24,9 @@ class DivisionComponent extends Component
 
     public function render()
     {
-        return view('livewire.admin.division-component',[
+	    $this->authorize('divisions.list');
+
+	    return view('livewire.admin.division-component',[
 			'divisions' => \App\Models\Division::query()
 				->latest()
                 ->where(function ($query) {
@@ -35,6 +37,11 @@ class DivisionComponent extends Component
                 ->paginate(10),
         ])->extends('layouts.app');
     }
+
+	public function resetFields()
+	{
+		$this->reset();
+	}
 
 	public function store()
 	{

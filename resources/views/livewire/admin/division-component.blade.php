@@ -30,7 +30,7 @@
 										@can('divisions.create')
 											<!-- Button ========================= -->
 											<div class="col-auto d-flex align-items-center ml-auto form-group">
-												<button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#addDivisionModal">
+												<button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#addDivisionModal" wire:click.prevent="resetFields">
 													Add Division
 												</button>
 											</div>

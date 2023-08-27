@@ -23,6 +23,8 @@ class RoleComponent extends Component
 
     public function render()
     {
+	    $this->authorize('roles.list');
+
 //		Loop through the permissions and display them by grouping them using their first common word
 //		$permissions = \Spatie\Permission\Models\Permission::all();
 //		$permissions = $permissions->groupBy(function ($item, $key) {

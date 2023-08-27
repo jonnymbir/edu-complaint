@@ -23,6 +23,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/login', \App\Livewire\Admin\Auth\LoginComponent::class)->name('login');
 Route::get('/logout', function () {
+	activity()
+		->inLog('User Activity Log')
+		->causedBy(auth()->user())
+		->performedOn(auth()->user())
+		->event('logged_out from the system')
+		->log('User logged out from the system at ' . now());
+
 	Auth::logout();
 	return redirect()->route('login');
 })->name('logout');

@@ -32,7 +32,7 @@
 										<!-- Button ========================= -->
 										<div class="col-auto d-flex align-items-center ml-auto form-group">
 											@can('users.create')
-												<button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#addUserModal">
+												<button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#addUserModal" wire:click.prevent="resetFields">
 													Add User
 												</button>
 											@endcan

@@ -80,10 +80,20 @@
 							
 							<div class="col-md-12 mb-3">
 								<label for="cc">CC</label>
-								<textarea class="form-control" rows="5" name="cc" id="cc" placeholder="CC" wire:model="cc"></textarea>
+								<input type="text" class="form-control" id="cc" placeholder="CC" wire:model="cc">
 								<small class="text-muted">Separate emails with comma</small>
 								
 								@error('cc')
+								<span class="text-danger">{{ $message }}</span>
+								@enderror
+							</div>
+							
+							<div class="col-md-12 mb-3">
+								<label for="note">Additional Information</label>
+								<textarea class="form-control" rows="5" name="note" id="note" placeholder="note" wire:model="note"></textarea>
+								<small class="text-muted">Provide additional information to the recipient </small>
+								
+								@error('note')
 								<span class="text-danger">{{ $message }}</span>
 								@enderror
 							</div>

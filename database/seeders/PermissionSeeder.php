@@ -36,6 +36,7 @@ class PermissionSeeder extends Seeder
 	    Permission::firstOrCreate(['name' => 'complaints.view']);
 	    Permission::firstOrCreate(['name' => 'complaints.comment']);
 	    Permission::firstOrCreate(['name' => 'complaints.reply']);
+	    Permission::firstOrCreate(['name' => 'complaints.update_status']);
 	    Permission::firstOrCreate(['name' => 'complaints.forward']);
 	    Permission::firstOrCreate(['name' => 'divisions.list']);
 	    Permission::firstOrCreate(['name' => 'divisions.create']);

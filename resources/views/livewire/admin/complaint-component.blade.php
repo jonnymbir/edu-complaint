@@ -42,7 +42,7 @@
 										</div>
 										<div class="col-sm-3 col-md-3 form-group">
 											<br>
-											<button class="btn btn-danger btn-block" wire:click="resetFilters">
+											<button class="btn btn-danger btn-block" wire:click="resetFilters" title="Reset Filters">
 												<i class="fa fa-redo-alt"></i>
 											</button>
 										</div>
@@ -72,7 +72,7 @@
 									<th scope="col">Full Name</th>
 									<th scope="col">Telephone</th>
 									<th scope="col">Gender</th>
-									<th scope="col">Stakeholder Type</th>
+									<th scope="col">Status</th>
 									<th scope="col">Creation Date</th>
 									@if(auth()->user()->can('complaints.view') || auth()->user()->can('complaints.reply') || auth()->user()->can('complaints.forward'))
 										<th scope="col">Action</th>
@@ -87,21 +87,49 @@
 										<td>{{ $complaint->full_name }}</td>
 										<td>{{ $complaint->telephone }}</td>
 										<td>{{ $complaint->sex }}</td>
-										<td>{{ $complaint->stakeholder_type }}</td>
+										<td>
+											<p class="fs-3 text-dark mb-0">
+												@if($complaint->status === 'pending')
+													<span class="badge fw-semibold py-1 w-85 bg-light-warning text-warning">
+													{{ $complaint->status }}
+												</span>
+												@elseif($complaint->status === 'resolved')
+													<span class="badge fw-semibold py-1 w-85 bg-light-success text-success">
+													{{ $complaint->status }}
+												</span>
+												@elseif($complaint->status === 'closed')
+													<span class="badge fw-semibold py-1 w-85 bg-light-danger text-danger">
+													{{ $complaint->status }}
+												</span>
+												@elseif($complaint->status === 'forwarded')
+													<span class="badge fw-semibold py-1 w-85 bg-light-primary text-primary">
+													{{ $complaint->status }}
+												</span>
+												@elseif($complaint->status === 'overdue')
+													<span class="badge fw-semibold py-1 w-85 bg-light-danger text-danger">
+													{{ $complaint->status }}
+												</span>
+												@else
+													<span class="badge fw-semibold py-1 w-85 bg-light-info text-info">
+													{{ $complaint->status }}
+												</span>
+												@endif
+											</p>
+										</td>
 										<td>{{ $complaint->created_at->format('dS M, Y') }}</td>
 										@if(auth()->user()->can('complaints.view') || auth()->user()->can('complaints.reply') || auth()->user()->can('complaints.forward'))
 											<td>
 												<div class="d-flex">
 													@can('complaints.view')
 														<button class="btn btn-sm btn-primary shadow btn-xs sharp me-1"
-														        data-bs-toggle="modal" data-bs-target="#viewComplaintModal"
+														        data-bs-toggle="modal" data-bs-target="#viewComplaintModal" title="View Complaint"
 														        wire:click="view({{ $complaint->id }})">
 															<i class="fa fa-eye"></i>
 														</button>
 													@endcan
 													
 													@can('complaints.reply')
-														<button class="btn btn-sm btn-warning shadow btn-xs sharp me-1"
+														<button class="btn btn-sm btn-warning shadow btn-xs sharp me-1" title="Reply Complaint"
 														        data-bs-toggle="modal" data-bs-target="#replyComplaintModal"
 														        wire:click="showCommentForm({{ $complaint->id }})">
 															<i class="fa fa-reply"></i>
@@ -109,13 +137,13 @@
 													@endcan
 													
 													@can('complaints.forward')
-														@if(!$complaint->is_forwarded)
-															<button class="btn btn-sm btn-dark shadow btn-xs sharp me-1"
+{{--														@if(!$complaint->is_forwarded)--}}
+															<button class="btn btn-sm btn-dark shadow btn-xs sharp me-1" title="Forward Complaint"
 															        data-bs-toggle="modal" data-bs-target="#forwardComplaintModal"
 															        wire:click="showCommentForm({{ $complaint->id }})">
 																<i class="fa fa-forward"></i>
 															</button>
-														@endif
+{{--														@endif--}}
 													@endcan
 												</div>
 											</td>

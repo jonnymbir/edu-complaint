@@ -23,7 +23,9 @@ class ActivityLogComponent extends Component
 
 	public function render()
     {
-        return view('livewire.admin.activity-log-component', [
+	    $this->authorize('activity_logs.list');
+
+	    return view('livewire.admin.activity-log-component', [
 	        'activity_logs' => Activity::orderBy('id', 'DESC')->paginate(10),
         ])->extends('layouts.app');
     }
@@ -45,7 +47,7 @@ class ActivityLogComponent extends Component
 		// dd($activity_log->properties);
 
 		// get the causer model name
-		$causer_model = $activity_log->causer_type;
+		$causer_model = $activity_log->causer_type ?: 'App\Models\User';
 		$causer_model = new $causer_model;
 		$causer_model = $causer_model->find($activity_log->causer_id);
 		// dd($causer_model);
@@ -57,7 +59,7 @@ class ActivityLogComponent extends Component
 		// dd($subject_model);
 
 		// take the last word of the causer model name
-		$causer_model_name = explode('\\', $activity_log->causer_type);
+		$causer_model_name = explode('\\', $activity_log->causer_type ?: 'App\Models\User');
 		$causer_model_name = end($causer_model_name);
 		// dd($causer_model_name);
 
@@ -93,7 +95,7 @@ class ActivityLogComponent extends Component
 		$this->description = $activity_log->description;
 		$this->subject_id = $subject_model ? $activity_log->subject->$subject_table_column : [];
 		$this->subject_type = $subject_model_name ?: $subject_model_type;
-		$this->causer_id = $activity_log->causer->name;
+		$this->causer_id = $activity_log->causer?->name ?: 'Unknown';
 		$this->causer_type = $causer_model_name;
 		$this->properties = $activity_log->properties->toArray();
 		// dd($this->properties);

@@ -68,12 +68,12 @@
 						<div class="round rounded bg-warning d-flex align-items-center justify-content-center">
 							<i class="fas fa-user text-white fs-7" title="XRP"></i>
 						</div>
-						<h6 class="mb-0 ms-3">Total Users</h6>
+						<h6 class="mb-0 ms-3">Grievances Overdue</h6>
 					</div>
 					<div class="d-flex align-items-center justify-content-between mt-4">
-						<h3 class="mb-0 fw-semibold fs-7">{{ $count_users }}</h3>
+						<h3 class="mb-0 fw-semibold fs-7">{{ $complaints_overdue }}</h3>
 						<span class="fw-bold">
-							<a href="{{ route('users') }}" class="text-primary">
+							<a href="{{ route('complaints') }}" class="text-primary">
 								View Details
 							</a>
 						</span>
@@ -128,7 +128,9 @@
 							<thead>
 							<tr class="text-muted fw-semibold">
 								<th scope="col" class="ps-0">Full Name</th>
+								<th scope="col" class="ps-0">Email Address</th>
 								<th scope="col">Concern</th>
+								<th scope="col">Category Assigned</th>
 								<th scope="col">Response Channel</th>
 								<th scope="col">Status</th>
 							</tr>
@@ -139,7 +141,12 @@
 									<td class="ps-0">
 										<div class="d-flex align-items-center">
 											<div class="me-2 pe-1">
-												<img src="{{ asset('dist/images/profile/user-1.jpg') }}" class="rounded-circle" width="40" height="40" alt="" />
+{{--												@if($recent_complaint->sex === 'Male')--}}
+{{--													<img src="{{ asset('dist/images/profile/user-1.jpg') }}" class="rounded-circle" width="40" height="40" alt="" />--}}
+{{--												@elseif($recent_complaint->sex === 'Female')--}}
+{{--													<img src="{{ asset('dist/images/profile/user-10.jpg') }}" class="rounded-circle" width="40" height="40" alt="" />--}}
+{{--												@endif--}}
+												<img src="{{ asset('dist/images/profile/user-13.png') }}" class="rounded-circle" width="40" height="40" alt="" />
 											</div>
 											<div>
 												<h6 class="fw-semibold mb-1">{{ $recent_complaint->full_name }}</h6>
@@ -148,7 +155,13 @@
 										</div>
 									</td>
 									<td>
+										<p class="mb-0 fs-3">{{ $recent_complaint->email_address }}</p>
+									</td>
+									<td>
 										<p class="mb-0 fs-3">{{ $recent_complaint->concern }}</p>
+									</td>
+									<td>
+										<p class="mb-0 fs-3">{{ $recent_complaint->complaintCategory?->name ?? 'Not Specified' }}</p>
 									</td>
 									<td>
 										<span class="badge fw-semibold py-1 w-85 bg-light-primary text-primary">
@@ -171,6 +184,10 @@
 												</span>
 											@elseif($recent_complaint->status === 'forwarded')
 												<span class="badge fw-semibold py-1 w-85 bg-light-primary text-primary">
+													{{ $recent_complaint->status }}
+												</span>
+											@elseif($recent_complaint->status === 'overdue')
+												<span class="badge fw-semibold py-1 w-85 bg-light-danger text-danger">
 													{{ $recent_complaint->status }}
 												</span>
 											@else

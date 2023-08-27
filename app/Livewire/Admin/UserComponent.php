@@ -20,6 +20,8 @@ class UserComponent extends Component
 
 	public function render()
 	{
+		$this->authorize('users.list');
+
 		return view('livewire.admin.user-component',[
 			'users' => \App\Models\User::with('roles')
 				->latest()
@@ -35,6 +37,11 @@ class UserComponent extends Component
 	public function updatingSearch()
 	{
 		$this->resetPage();
+	}
+
+	public function resetFields()
+	{
+		$this->reset();
 	}
 
 	public function store()

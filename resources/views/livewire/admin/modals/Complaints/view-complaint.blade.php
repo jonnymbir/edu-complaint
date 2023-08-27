@@ -16,6 +16,8 @@
 							<span class="badge bg-danger">{{ $this->status }}</span>
 						@elseif($this->status === 'forwarded')
 							<span class="badge bg-primary">{{ $this->status }}</span>
+						@elseif($this->status === 'overdue')
+							<span class="badge bg-danger">{{ $this->status }}</span>
 						@endif
 				</h4>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

@@ -30,7 +30,7 @@
 										@can('units.create')
 											<!-- Button ========================= -->
 											<div class="col-auto d-flex align-items-center ml-auto form-group">
-												<button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#addUnitModal">
+												<button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#addUnitModal" wire:click.prevent="resetFields">
 													Add Unit
 												</button>
 											</div>

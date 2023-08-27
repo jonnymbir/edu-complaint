@@ -12,7 +12,8 @@
 							<img src="{{ asset('dist/images/favicon.png') }}" width="100" alt="">
 						</a>
 						<div class="d-none d-xl-flex align-items-center justify-content-center" style="height: calc(100vh - 80px);">
-							<img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/backgrounds/login-security.svg" alt="" class="img-fluid" width="500">
+{{--							<img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/backgrounds/login-security.svg" alt="" class="img-fluid" width="500">--}}
+							<img src="{{ asset('dist/images/favicon.png') }}" alt="" class="img-fluid" width="500">
 						</div>
 					</div>
 					<div class="col-xl-5 col-xxl-4">

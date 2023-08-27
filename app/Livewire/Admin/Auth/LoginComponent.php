@@ -32,6 +32,12 @@ class LoginComponent extends Component
 
 		if (auth()->attempt($credentials, $this->remember_me))
 		{
+			activity()
+				->causedBy(auth()->user())
+				->performedOn(auth()->user())
+				->event('logged_in to the system')
+				->log('User logged in to the system successfully with email: ' . $this->email . ' at ' . now());
+
 			return redirect()->route('dashboard')->with('success', 'You are now logged in');
 		}
 

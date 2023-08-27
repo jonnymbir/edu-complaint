@@ -24,7 +24,9 @@ class UnitComponent extends Component
 
     public function render()
     {
-        return view('livewire.admin.unit-component',[
+	    $this->authorize('units.list');
+
+	    return view('livewire.admin.unit-component',[
 	        'units' => \App\Models\Unit::query()
 		        ->latest()
 		        ->where(function ($query) {
@@ -35,6 +37,12 @@ class UnitComponent extends Component
 		        ->paginate(10),
         ])->extends('layouts.app');
     }
+
+	public function resetFields()
+	{
+		$this->reset();
+	}
+
 
 	public function store()
 	{

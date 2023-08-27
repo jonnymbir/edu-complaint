@@ -48,7 +48,7 @@ class Complaint extends Model
 	{
 		return LogOptions::defaults()
 			->logOnly([
-				'complaint_category.name',
+				'complaint_category_id',
 				'ticket_number',
 				'first_name',
 				'middle_name',

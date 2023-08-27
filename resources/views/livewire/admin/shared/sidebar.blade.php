@@ -8,8 +8,8 @@
 			
 			<div class="brand-logo d-flex align-items-center justify-content-between">
 				<a href="{{ route('dashboard') }}" class="text-nowrap logo-img">
-					<img src="{{ asset('dist/images/favicon.png') }}" class="dark-logo" width="40" alt="" />
-					<img src="{{ asset('dist/images/favicon.png') }}" class="light-logo"  width="40" alt="" />
+					<img src="{{ asset('dist/images/favicon.png') }}" class="dark-logo" width="150" alt="" />
+					<img src="{{ asset('dist/images/favicon.png') }}" class="light-logo"  width="150" alt="" />
 				</a>
 				<div class="close-btn d-lg-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
 					<i class="ti ti-x fs-8 text-muted"></i>
@@ -148,7 +148,7 @@
 			<div class="fixed-profile p-3 bg-light-secondary rounded sidebar-ad mt-3">
 				<div class="hstack gap-3">
 					<div class="john-img">
-						<img src="{{asset('dist/images/profile/user-1.jpg')}}" class="rounded-circle" width="40" height="40" alt="">
+						<img src="{{asset('dist/images/profile/user-13.png')}}" class="rounded-circle" width="40" height="40" alt="">
 					</div>
 					<div class="john-title">
 						<h6 class="mb-0 fs-4 fw-semibold">{{ auth()->user()->name }}</h6>

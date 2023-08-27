@@ -68,9 +68,10 @@ class ComplaintComponent extends Component
 	public $forward_type;
 	public ?int $division = null;
 	public ?int $unit = null;
-	public ?string $div_email;
-	public ?string $unit_email;
+	public ?string $div_email = null;
+	public ?string $unit_email = null;
 	public $cc;
+	public ?string $note = '';
 
 	public ?int $complaint_category = null;
 
@@ -85,7 +86,9 @@ class ComplaintComponent extends Component
 
     public function render()
     {
-        return view('livewire.admin.complaint-component',[
+	    $this->authorize('complaints.list');
+
+	    return view('livewire.admin.complaint-component',[
 			'complaints' => Complaint::with('comments')
                 ->latest()
 				->where('ticket_number', 'like', '%'.$this->search.'%')
@@ -107,24 +110,25 @@ class ComplaintComponent extends Component
 		$this->search_category = '';
 	}
 
-//	public function resetFields()
-//	{
-//		$this->first_name = null;
-//		$this->middle_name = null;
-//		$this->last_name = null;
-//		$this->email_address = null;
-//		$this->sex = 'male';
-//		$this->telephone = null;
-//		$this->region = null;
-//		$this->district = null;
-//		$this->stakeholder_type = null;
-//		$this->concern = null;
-//		$this->details = null;
-//		$this->attachments = [];
-//		$this->response_channel = null;
-//		$this->is_anonymous = false;
-//		$this->status = 'pending';
-//	}
+	public function resetForm(): void
+	{
+		$this->first_name = null;
+		$this->middle_name = null;
+		$this->last_name = null;
+		$this->email_address = null;
+		$this->telephone = null;
+		$this->sex = 'male';
+		$this->age_range = null;
+		$this->region = null;
+		$this->district = null;
+		$this->stakeholder_type = null;
+		$this->concern = null;
+		$this->details = null;
+		$this->attachments = [];
+		$this->response_channel = null;
+		$this->is_anonymous = false;
+		$this->status = 'pending';
+	}
 
 	// update on select of complaint category
 	public function updatedComplaintCategory($value): void
@@ -136,6 +140,13 @@ class ComplaintComponent extends Component
 				'complaint_category_id' => $value,
 			]);
 
+			activity()
+				->inLog('Complaint Activity Log')
+				->causedBy(auth()->user())
+				->performedOn($this->complaint)
+				->event('assigned category')
+				->log('Complaint category assigned to complaint '.$this->complaint->ticket_number.' by '.auth()->user()->name.'.');
+
 			session()->flash('success', 'Category assigned successfully.');
 		}
 	}
@@ -146,25 +157,6 @@ class ComplaintComponent extends Component
 			$this->districts = District::where('region_id', $region)->get();
 			$this->district = 0;
 		}
-	}
-
-	public function resetForm(): void
-	{
-		$this->first_name = null;
-		$this->middle_name = null;
-		$this->last_name = null;
-		$this->email_address = null;
-		$this->telephone = null;
-		$this->sex = 'male';
-		$this->region = null;
-		$this->district = null;
-		$this->stakeholder_type = null;
-		$this->concern = null;
-		$this->details = null;
-		$this->attachments = [];
-		$this->response_channel = null;
-		$this->is_anonymous = false;
-		$this->status = 'pending';
 	}
 
 	public function view($id): void
@@ -191,12 +183,20 @@ class ComplaintComponent extends Component
 		$this->response_channel  = $this->complaint->response_channel;
 		$this->is_anonymous  = $this->complaint->is_anonymous === 1 ? "Yes" : "No";
 		$this->status  = $this->complaint->status;
+
+		activity()
+			->inLog('Complaint Activity Log')
+			->causedBy(auth()->user())
+			->performedOn($this->complaint)
+			->event('viewed complaint')
+			->log('Complaint '.$this->complaint->ticket_number.' viewed by '.auth()->user()->name.' at '.now());
 	}
 
 	public function showCommentForm($id): void
 	{
 		$this->complaint = Complaint::findOrFail($id);
 		$this->response = $this->complaint->response;
+		$this->status = $this->complaint->status;
 	}
 
 	public function submitComment(): void
@@ -229,7 +229,7 @@ class ComplaintComponent extends Component
 
 		$this->complaint->update([
 			'response' => $this->response,
-			'status' => 'responded',
+			'status' => $this->status,
 		]);
 
 //		toastr()->success('Response added successfully.');
@@ -328,20 +328,22 @@ class ComplaintComponent extends Component
 		try {
 			DB::beginTransaction();
 
+			$data = [
+				'complaint' => $this->complaint,
+				'forward_type' => $this->forward_type,
+				'email' => $this->forward_type === 'division' ? $this->div_email : $this->unit_email,
+				'cc' => $this->cc,
+				'note' => $this->note,
+				'status' => $this->complaint->status,
+			];
+
 			$this->complaint->update([
 				'is_forwarded' => true,
 				'times_forwarded' => $this->complaint->times_forwarded + 1,
 				'status' => 'forwarded',
 			]);
 
-			$data = [
-				'complaint' => $this->complaint,
-				'forward_type' => $this->forward_type,
-				'email' => $this->forward_type === 'division' ? $this->div_email : $this->unit_email,
-				'cc' => $this->cc,
-			];
-
-			$ccRecipients = explode(',', $this->cc);
+			$ccRecipients = explode(',', $this->cc ?: ($this->forward_type === 'division' ? $this->div_email : $this->unit_email));
 
 			// send mail to division with cc and bcc
 			Mail::send('emails.forward_complaint_mail', $data, function ($message) use ($div, $uni, $ccRecipients) {
@@ -350,6 +352,13 @@ class ComplaintComponent extends Component
 				$message->cc($ccRecipients);
 				$message->subject('Forwarded Complaint');
 			});
+
+			activity()
+				->inLog('Complaint Activity Log')
+				->causedBy(auth()->user())
+				->performedOn($this->complaint)
+				->event('forwarded complaint')
+				->log('Complaint '.$this->complaint->ticket_number.' forwarded by '.auth()->user()->name.' to '.$this->forward_type.' at '.now());
 
 			DB::commit();
 

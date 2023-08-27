@@ -218,23 +218,43 @@
 							<div class="notification bg-primary rounded-circle"></div>
 						</a>
 						<div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+							@php
+								$overdue_complaints = \App\Models\Complaint::query()->where('response', null)
+									->where('created_at', '<', now()->subDays(15))
+									->get();
+							@endphp
 							<div class="d-flex align-items-center justify-content-between py-3 px-7">
 								<h5 class="mb-0 fs-5 fw-semibold">Notifications</h5>
-								<span class="badge bg-primary rounded-4 px-3 py-1 lh-sm">1 new</span>
+								<span class="badge bg-primary rounded-4 px-3 py-1 lh-sm">{{ $overdue_complaints->count() }} new</span>
 							</div>
 							<div class="message-body" data-simplebar>
-								<a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
-			                          <span class="me-3">
-			                            <img src="../../dist/images/profile/user-1.jpg" alt="user" class="rounded-circle" width="48" height="48" />
-			                          </span>
-									<div class="w-75 d-inline-block v-middle">
-										<h6 class="mb-1 fw-semibold">Roman Joined the Team!</h6>
-										<span class="d-block">Congratulate him</span>
-									</div>
-								</a>
+								@forelse($overdue_complaints as $overdue_complaint)
+									<a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
+				                          <span class="me-3">
+				                            <img src="{{asset('dist/images/profile/user-13.png')}}" alt="user" class="rounded-circle" width="48" height="48" />
+				                          </span>
+										<div class="w-75 d-inline-block v-middle">
+											<h6 class="mb-1 fw-semibold">
+												Complaint ({{ $overdue_complaint->ticket_number }}) is overdue
+											</h6>
+											<span class="d-block">
+												{{ $overdue_complaint->created_at->diffForHumans() }}
+											</span>
+										</div>
+									</a>
+								@empty
+									<a href="javascript:void(0)" class="py-6 px-7 d-flex align-items-center dropdown-item">
+				                          <span class="me-3">
+				                            <img src="{{ asset('dist/images/profile/user-13.png') }}" alt="user" class="rounded-circle" width="48" height="48" />
+				                          </span>
+										<div class="w-75 d-inline-block v-middle">
+											<h6 class="mb-1 fw-semibold">No Overdue Complaints</h6>
+										</div>
+									</a>
+								@endforelse
 							</div>
 							<div class="py-6 px-7 mb-1">
-								<button class="btn btn-outline-primary w-100"> See All Notifications </button>
+								<a href="{{ route('complaints') }}" class="btn btn-outline-primary w-100"> Go To Complaint </a>
 							</div>
 						</div>
 					</li>
@@ -242,7 +262,7 @@
 						<a class="nav-link pe-0" href="javascript:void(0)" id="drop1" data-bs-toggle="dropdown" aria-expanded="false">
 							<div class="d-flex align-items-center">
 								<div class="user-profile-img">
-									<img src="{{asset('dist/images/profile/user-1.jpg')}}" class="rounded-circle" width="35" height="35" alt="" />
+									<img src="{{asset('dist/images/profile/user-13.png')}}" class="rounded-circle" width="35" height="35" alt="" />
 								</div>
 							</div>
 						</a>
@@ -252,7 +272,7 @@
 									<h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
 								</div>
 								<div class="d-flex align-items-center py-9 mx-7 border-bottom">
-									<img src="{{asset('dist/images/profile/user-1.jpg')}}" class="rounded-circle" width="80" height="80" alt="" />
+									<img src="{{asset('dist/images/profile/user-13.png')}}" class="rounded-circle" width="80" height="80" alt="" />
 									<div class="ms-3">
 										<h5 class="mb-1 fs-3">{{ auth()->user()->full_name }}</h5>
 										<span class="mb-1 d-block text-dark">{{ auth()->user()->roles?->first()->name ?? 'No Role Assigned' }}</span>

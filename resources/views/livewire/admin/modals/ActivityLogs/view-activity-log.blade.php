@@ -15,7 +15,7 @@
 					<div class="card-body">
 						<input type="text" class="form-control" value="User" disabled readonly wire:model='causer_type'>
 						<br>
-						<input type="text" class="form-control" value="Favour nwevo" disabled readonly wire:model='causer_id'>
+						<input type="text" class="form-control" value="Something Here" disabled readonly wire:model='causer_id'>
 					</div>
 				</div>
 				<div class="card">
@@ -26,7 +26,7 @@
 						<input type="text" class="form-control" value="User" disabled readonly wire:model='subject_type'>
 						@if ($this->subject_id)
 							<br>
-							<input type="text" class="form-control" value="Favour nwevo" disabled readonly wire:model='subject_id'>
+							<input type="text" class="form-control" value="Something Here" disabled readonly wire:model='subject_id'>
 						@endif
 					</div>
 				</div>
