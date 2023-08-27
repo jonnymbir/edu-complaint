@@ -31,7 +31,7 @@
 						<!-- Dashboard -->
 						<!-- =================== -->
 						<li class="sidebar-item">
-							<a class="sidebar-link" href="{{ route('dashboard') }}" aria-expanded="false">
+							<a class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : ''}}" href="{{ route('dashboard') }}" aria-expanded="false">
 				              <span>
 				                <i class="ti ti-activity-heartbeat"></i>
 				              </span>
@@ -49,7 +49,7 @@
 						</li>
 						@if(auth()->user()->can('users.list'))
 							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{ route('users') }}" aria-expanded="false">
+								<a class="sidebar-link {{ request()->routeIs('users') ? 'active' : ''}}" href="{{ route('users') }}" aria-expanded="false">
 				                  <span>
 				                    <i class="ti ti-user-circle"></i>
 				                  </span>
@@ -60,7 +60,7 @@
 					
 						@if(auth()->user()->can('roles.list'))
 							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{ route('roles') }}" aria-expanded="false">
+								<a class="sidebar-link {{ request()->routeIs('roles') ? 'active' : ''}}" href="{{ route('roles') }}" aria-expanded="false">
 					                  <span>
 					                    <i class="ti ti-layout-kanban"></i>
 					                  </span>
@@ -77,20 +77,10 @@
 							<i class="ti ti-dots nav-small-cap-icon fs-4"></i>
 							<span class="hide-menu">PAGES</span>
 						</li>
-						@if(auth()->user()->can('regions.list'))
-							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{ route('regions') }}" aria-expanded="false">
-				              <span>
-				                <i class="ti ti-location"></i>
-				              </span>
-									<span class="hide-menu">Regions/Districts</span>
-								</a>
-							</li>
-						@endif
 						
 						@if(auth()->user()->can('complaints.list'))
 							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{ route('complaints') }}" aria-expanded="false">
+								<a class="sidebar-link {{ request()->routeIs('complaints') ? 'active' : ''}}" href="{{ route('complaints') }}" aria-expanded="false">
 					              <span>
 					                <i class="ti ti-question-mark"></i>
 					              </span>
@@ -101,7 +91,7 @@
 					
 						@if(auth()->user()->can('divisions.list'))
 							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{ route('divisions') }}" aria-expanded="false">
+								<a class="sidebar-link {{ request()->routeIs('divisions') ? 'active' : ''}}" href="{{ route('divisions') }}" aria-expanded="false">
 					              <span>
 					                <i class="ti ti-category"></i>
 					              </span>
@@ -112,7 +102,7 @@
 						
 						@if(auth()->user()->can('units.list'))
 							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{ route('units') }}" aria-expanded="false">
+								<a class="sidebar-link {{ request()->routeIs('units') ? 'active' : ''}}" href="{{ route('units') }}" aria-expanded="false">
 					              <span>
 					                <i class="ti ti-category-2"></i>
 					              </span>
@@ -122,18 +112,29 @@
 						@endif
 					@endif
 					
+					@if(auth()->user()->can('regions.list'))
+						<li class="sidebar-item">
+							<a class="sidebar-link {{ request()->routeIs('regions') ? 'active' : ''}}" href="{{ route('regions') }}" aria-expanded="false">
+				              <span>
+				                <i class="ti ti-location"></i>
+				              </span>
+								<span class="hide-menu">Regions/Districts</span>
+							</a>
+						</li>
+					@endif
+					
 					<!-- ============================= -->
 					<!-- PAGES -->
 					<!-- ============================= -->
 					@if(auth()->user()->can('activity_logs.list'))
 						<li class="nav-small-cap">
 							<i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-							<span class="hide-menu">Configuration</span>
+							<span class="hide-menu">Logs</span>
 						</li>
 						
 						@if(auth()->user()->can('activity_logs.list'))
 							<li class="sidebar-item">
-								<a class="sidebar-link" href="{{ route('activity_logs') }}" aria-expanded="false">
+								<a class="sidebar-link {{ request()->routeIs('activity_logs') ? 'active' : ''}}" href="{{ route('activity_logs') }}" aria-expanded="false">
 					              <span>
 					                <i class="ti ti-activity"></i>
 					              </span>
