@@ -67,13 +67,14 @@
 							<table class="table mb-0">
 								<thead>
 								<tr>
-									<th scope="col">#</th>
-									<th scope="col">Complaint ID</th>
+{{--									<th scope="col">#</th>--}}
 									<th scope="col">Full Name</th>
 									<th scope="col">Telephone</th>
-									<th scope="col">Gender</th>
+									<th scope="col">Concern</th>
+									<th scope="col">Category Assigned</th>
+									<th scope="col">Response Channel</th>
 									<th scope="col">Status</th>
-									<th scope="col">Creation Date</th>
+{{--									<th scope="col">Creation Date</th>--}}
 									@if(auth()->user()->can('complaints.view') || auth()->user()->can('complaints.reply') || auth()->user()->can('complaints.forward'))
 										<th scope="col">Action</th>
 									@endif
@@ -82,11 +83,28 @@
 								<tbody>
 								@foreach($complaints as $key => $complaint)
 									<tr wire:key="{{ $key }}">
-										<th scope="row">{{ $key + 1 }}</th>
-										<td>{{ $complaint->ticket_number }}</td>
-										<td>{{ $complaint->full_name }}</td>
+{{--										<th scope="row">{{ $key + 1 }}</th>--}}
+										<td class="ps-0">
+											<div class="d-flex align-items-center">
+												<div class="me-2 pe-1">
+													<img src="{{ asset('dist/images/profile/user-13.png') }}" class="rounded-circle" width="40" height="40" alt="" />
+												</div>
+												<div>
+													<h6 class="fw-semibold mb-1">{{ $complaint->full_name }}</h6>
+													<p class="fs-2 mb-0 text-muted">{{ $complaint->stakeholder_type }}</p>
+												</div>
+											</div>
+										</td>
 										<td>{{ $complaint->telephone }}</td>
-										<td>{{ $complaint->sex }}</td>
+										<td>{{ $complaint->concern }}</td>
+										<td>
+											<p class="mb-0 fs-3">{{ $recent_complaint->complaintCategory?->name ?? 'Not Specified' }}</p>
+										</td>
+										<td>
+										<span class="badge fw-semibold py-1 w-85 bg-light-primary text-primary">
+											{{ $complaint->response_channel }}
+										</span>
+										</td>
 										<td>
 											<p class="fs-3 text-dark mb-0">
 												@if($complaint->status === 'pending')
@@ -116,7 +134,7 @@
 												@endif
 											</p>
 										</td>
-										<td>{{ $complaint->created_at->format('dS M, Y') }}</td>
+{{--										<td>{{ $complaint->created_at->format('dS M, Y') }}</td>--}}
 										@if(auth()->user()->can('complaints.view') || auth()->user()->can('complaints.reply') || auth()->user()->can('complaints.forward'))
 											<td>
 												<div class="d-flex">

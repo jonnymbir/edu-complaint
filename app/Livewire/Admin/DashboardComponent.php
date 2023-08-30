@@ -7,6 +7,7 @@ use Livewire\Component;
 class DashboardComponent extends Component
 {
 	public $date_search;
+	public $filter;
 
 	public function mount()
 	{
@@ -21,7 +22,7 @@ class DashboardComponent extends Component
 			'recent_complaints' => \App\Models\Complaint::with('comments')
 	        				->latest()
 							->whereMonth('created_at', $this->date_search ? date('m', strtotime($this->date_search)) : date('m'))
-	        				->take(10)
+	        				->take(20)
 	        				->get(),
 
 	        'total_complaints' => \App\Models\Complaint::count(),

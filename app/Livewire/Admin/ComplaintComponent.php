@@ -24,7 +24,8 @@ class ComplaintComponent extends Component
 	public $search;
 	public $search_category;
 
-	protected $queryString = ['search'];
+	protected $queryString = ['search', 'filter'];
+	public mixed $filter = '';
 
 	public $ticket_number;
 	#[Rule('required|string')]
@@ -82,6 +83,8 @@ class ComplaintComponent extends Component
 
 		$this->region = 0;
 		$this->district = 0;
+
+		$this->filter = request()?->query('filter', $this->filter);
 	}
 
     public function render()
@@ -92,6 +95,7 @@ class ComplaintComponent extends Component
 			'complaints' => Complaint::with('comments')
                 ->latest()
 				->where('ticket_number', 'like', '%'.$this->search.'%')
+				->where('status', 'like', '%'.$this->filter.'%')
 				->when('complaint_category', function ($query) {
 					if ($this->search_category){
 						$query->where('complaint_category_id', $this->search_category);

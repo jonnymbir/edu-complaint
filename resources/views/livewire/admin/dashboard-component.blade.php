@@ -33,7 +33,7 @@
 					<div class="d-flex align-items-center justify-content-between mt-4">
 						<h3 class="mb-0 fw-semibold fs-7">{{ $complaints_addressed }}</h3>
 						<span class="fw-bold">
-							<a href="{{ route('complaints') }}" class="text-primary">
+							<a href="{{ route('complaints', ['filter' => 'resolved']) }}" class="text-primary">
 								View Details
 							</a>
 						</span>
@@ -53,7 +53,7 @@
 					<div class="d-flex align-items-center justify-content-between mt-4">
 						<h3 class="mb-0 fw-semibold fs-7">{{ $complaints_forwarded }}</h3>
 						<span class="fw-bold">
-							<a href="{{ route('complaints') }}" class="text-primary">
+							<a href="{{ route('complaints', ['filter' => 'forwarded']) }}" class="text-primary">
 								View Details
 							</a>
 						</span>
@@ -73,7 +73,7 @@
 					<div class="d-flex align-items-center justify-content-between mt-4">
 						<h3 class="mb-0 fw-semibold fs-7">{{ $complaints_overdue }}</h3>
 						<span class="fw-bold">
-							<a href="{{ route('complaints') }}" class="text-primary">
+							<a href="{{ route('complaints', ['filter' => 'overdue']) }}" class="text-primary">
 								View Details
 							</a>
 						</span>
@@ -128,11 +128,12 @@
 							<thead>
 							<tr class="text-muted fw-semibold">
 								<th scope="col" class="ps-0">Full Name</th>
-								<th scope="col" class="ps-0">Email Address</th>
+								<th scope="col" class="ps-0">Telephone</th>
 								<th scope="col">Concern</th>
 								<th scope="col">Category Assigned</th>
 								<th scope="col">Response Channel</th>
 								<th scope="col">Status</th>
+{{--								<th scope="col">Creation Date</th>--}}
 							</tr>
 							</thead>
 							<tbody class="border-top">
@@ -141,11 +142,6 @@
 									<td class="ps-0">
 										<div class="d-flex align-items-center">
 											<div class="me-2 pe-1">
-{{--												@if($recent_complaint->sex === 'Male')--}}
-{{--													<img src="{{ asset('dist/images/profile/user-1.jpg') }}" class="rounded-circle" width="40" height="40" alt="" />--}}
-{{--												@elseif($recent_complaint->sex === 'Female')--}}
-{{--													<img src="{{ asset('dist/images/profile/user-10.jpg') }}" class="rounded-circle" width="40" height="40" alt="" />--}}
-{{--												@endif--}}
 												<img src="{{ asset('dist/images/profile/user-13.png') }}" class="rounded-circle" width="40" height="40" alt="" />
 											</div>
 											<div>
@@ -155,7 +151,7 @@
 										</div>
 									</td>
 									<td>
-										<p class="mb-0 fs-3">{{ $recent_complaint->email_address }}</p>
+										<p class="mb-0 fs-3">{{ $recent_complaint->telephone }}</p>
 									</td>
 									<td>
 										<p class="mb-0 fs-3">{{ $recent_complaint->concern }}</p>
@@ -197,6 +193,9 @@
 											@endif
 										</p>
 									</td>
+{{--									<td>--}}
+{{--										<p class="mb-0 fs-3">{{ date('dS F, Y', strtotime($recent_complaint->created_at)) }}</p>--}}
+{{--									</td>--}}
 								</tr>
 							@endforeach
 							</tbody>
