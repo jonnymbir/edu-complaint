@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DistrictResource extends JsonResource
+/**
+ * @property mixed $id
+ * @property mixed $name
+ */
+class RegionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +20,8 @@ class DistrictResource extends JsonResource
     {
         return [
 			'id' => $this->id,
-            'name' => $this->name,
-        ];
+			'name' => $this->name,
+			'districts' => DistrictResource::collection($this->whenLoaded('districts')),
+		];
     }
 }

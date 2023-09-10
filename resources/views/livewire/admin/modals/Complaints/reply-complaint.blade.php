@@ -32,7 +32,7 @@
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-12 mb-3">
-									<label for="comment">Response Channel</label>
+									<label for="comment">Response Channel ({{ $this->complaint->telephone }})</label>
 									<input type="text" class="form-control" value="{{ $this->complaint->response_channel }}" disabled readonly />
 								</div>
 								

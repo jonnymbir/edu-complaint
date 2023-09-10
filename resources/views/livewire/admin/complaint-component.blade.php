@@ -98,7 +98,7 @@
 										<td>{{ $complaint->telephone }}</td>
 										<td>{{ $complaint->concern }}</td>
 										<td>
-											<p class="mb-0 fs-3">{{ $recent_complaint->complaintCategory?->name ?? 'Not Specified' }}</p>
+											<p class="mb-0 fs-3">{{ $complaint->complaintCategory?->name ?? 'Not Specified' }}</p>
 										</td>
 										<td>
 										<span class="badge fw-semibold py-1 w-85 bg-light-primary text-primary">

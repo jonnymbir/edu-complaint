@@ -7,13 +7,16 @@ use App\Models\District;
 use App\Models\Division;
 use App\Models\Unit;
 use Exception;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use JsonException;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
+use NotificationChannels\WhatsApp\Exceptions\CouldNotSendNotification;
 
 class ComplaintComponent extends Component
 {
@@ -24,7 +27,7 @@ class ComplaintComponent extends Component
 	public $search;
 	public $search_category;
 
-	protected $queryString = ['search', 'filter'];
+	protected array $queryString = ['search', 'filter'];
 	public mixed $filter = '';
 
 	public $ticket_number;
@@ -92,7 +95,7 @@ class ComplaintComponent extends Component
 	    $this->authorize('complaints.list');
 
 	    return view('livewire.admin.complaint-component',[
-			'complaints' => Complaint::with('comments')
+			'complaints' => Complaint::with(['comments','complaintCategory'])
                 ->latest()
 				->where('ticket_number', 'like', '%'.$this->search.'%')
 				->where('status', 'like', '%'.$this->filter.'%')
@@ -193,7 +196,7 @@ class ComplaintComponent extends Component
 			->causedBy(auth()->user())
 			->performedOn($this->complaint)
 			->event('viewed complaint')
-			->log('Complaint '.$this->complaint->ticket_number.' viewed by '.auth()->user()->name.' at '.now());
+			->log('Complaint '.$this->complaint->ticket_number.' was viewed by '.auth()->user()->name.' at '.now());
 	}
 
 	public function showCommentForm($id): void
@@ -231,13 +234,21 @@ class ComplaintComponent extends Component
 			'response' => 'required',
 		]);
 
-		$this->complaint->update([
-			'response' => $this->response,
-			'status' => $this->status,
-		]);
+		try {
+			$this->complaint->update([
+				'response' => $this->response,
+				'status' => $this->status,
+			]);
 
-//		toastr()->success('Response added successfully.');
-		session()->flash('success', 'Response added successfully.');
+			Notification::route('broadcast', [new Channel('whatsapp')])
+				->notify(new \App\Notifications\WhatsAppNotices($this->complaint));
+
+	//		toastr()->success('Response added successfully.');
+			session()->flash('success', 'Response added successfully.');
+		} catch (CouldNotSendNotification $e) {
+			session()->flash('error', 'Response failed. please check the telephone number and try again or contact the administrator.');
+//			session()->flash('error', $e->getMessage());
+		}
 	}
 
 	/**

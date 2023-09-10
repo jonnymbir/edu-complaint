@@ -19,7 +19,7 @@ class DashboardComponent extends Component
 		$this->authorize('dashboard.view');
 
         return view('livewire.admin.dashboard-component',[
-			'recent_complaints' => \App\Models\Complaint::with('comments')
+			'recent_complaints' => \App\Models\Complaint::with(['comments', 'complaintCategory'])
 	        				->latest()
 							->whereMonth('created_at', $this->date_search ? date('m', strtotime($this->date_search)) : date('m'))
 	        				->take(20)

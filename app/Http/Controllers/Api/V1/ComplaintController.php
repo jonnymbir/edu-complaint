@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\RegionResource;
+use App\Http\Resources\Api\ComplaintResource;
+use App\Http\Resources\Api\RegionResource;
 use App\Models\Complaint;
 use App\Models\Region;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
+use JsonException;
 
 class ComplaintController extends Controller
 {
@@ -21,6 +25,9 @@ class ComplaintController extends Controller
 		]);
     }
 
+	/**
+	 * @throws JsonException
+	 */
 	public function publish_question (Request $request): \Illuminate\Http\JsonResponse
 	{
 		$validator = Validator::make($request->all(), [
@@ -57,29 +64,41 @@ class ComplaintController extends Controller
 			}
 		}
 
-		Complaint::create([
-			'first_name' => $request->first_name,
-			'middle_name' => $request->middle_name,
-			'last_name' => $request->last_name,
-			'email_address' => $request->email_address,
-			'telephone' => $request->telephone,
-			'sex' => $request->sex,
-			'age_range' => $request->age_range,
-			'region_id' => $request->region,
-			'district_id' => $request->district,
-			'stakeholder_type' => $request->stakeholder_type,
-			'concern' => $request->concern,
-			'details' => $request->details,
-			'attachments' => isset($attachments) ? json_encode($attachments, JSON_THROW_ON_ERROR) : null,
-			'response_channel' => $request->response_channel,
-			'is_anonymous' => $request->is_anonymous,
-			'status' => 'pending',
-		]);
+		try {
+			$complaint = Complaint::create([
+				'first_name' => $request->input('first_name'),
+				'middle_name' => $request->input('middle_name'),
+				'last_name' => $request->input('last_name'),
+				'email_address' => $request->input('email_address'),
+				'telephone' => $request->input('telephone'),
+				'sex' => $request->input('sex'),
+				'age_range' => $request->input('age_range'),
+				'region_id' => $request->input('region'),
+				'district_id' => $request->input('district'),
+				'stakeholder_type' => $request->input('stakeholder_type'),
+				'concern' => $request->input('concern'),
+				'details' => $request->input('details'),
+				'attachments' => isset($attachments) ? json_encode($attachments, JSON_THROW_ON_ERROR) : null,
+				'response_channel' => $request->input('response_channel'),
+				'is_anonymous' => $request->input('is_anonymous'),
+				'status' => 'pending',
+			]);
 
-		return response()->json([
-			'status' => 'success',
-			'message' => 'Complaint submitted successfully',
-			'data' => $request->all(),
-		]);
+			if ($request->input('response_channel') === "whatsapp"){
+				Notification::route('broadcast', [new Channel('whatsapp')])
+					->notify(new \App\Notifications\WhatsAppNotices($complaint));
+			}
+
+			return response()->json([
+				'status' => 'success',
+				'message' => 'Complaint submitted successfully',
+				'data' => ComplaintResource::make($complaint),
+			]);
+		} catch (JsonException $e) {
+			return response()->json([
+				'status' => 'error',
+				'message' => $e->getMessage(),
+			], 500);
+		}
 	}
 }
