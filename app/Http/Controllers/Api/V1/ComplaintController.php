@@ -84,7 +84,7 @@ class ComplaintController extends Controller
 				'status' => 'pending',
 			]);
 
-			if ($request->input('response_channel') === "whatsapp"){
+			if ($request->input('response_channel') === "whatsapp" || $request->input('response_channel') === "WhatsApp"){
 				Notification::route('broadcast', [new Channel('whatsapp')])
 					->notify(new \App\Notifications\WhatsAppNotices($complaint));
 			}
