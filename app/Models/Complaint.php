@@ -113,7 +113,7 @@ class Complaint extends Model
 	//	getter for the sex in capital letters
 	public function getResponseChannelAttribute($value): string
 	{
-		return Str::title($value);
+		return Str::headline($value);
 	}
 
 	public function complaintCategory(): BelongsTo

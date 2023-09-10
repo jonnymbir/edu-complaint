@@ -246,8 +246,8 @@ class ComplaintComponent extends Component
 	//		toastr()->success('Response added successfully.');
 			session()->flash('success', 'Response added successfully.');
 		} catch (CouldNotSendNotification $e) {
-			session()->flash('error', 'Response failed. please check the telephone number and try again or contact the administrator.');
-//			session()->flash('error', $e->getMessage());
+//			session()->flash('error', 'Response failed. please check the telephone number and try again or contact the administrator.');
+			session()->flash('error', $e->getMessage());
 		}
 	}
 
