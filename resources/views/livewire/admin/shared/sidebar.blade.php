@@ -84,7 +84,7 @@
 					              <span>
 					                <i class="ti ti-question-mark"></i>
 					              </span>
-									<span class="hide-menu">Complaints</span>
+									<span class="hide-menu">Concerns</span>
 								</a>
 							</li>
 						@endif

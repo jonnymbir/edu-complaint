@@ -9,6 +9,7 @@ use App\Models\Complaint;
 use App\Models\Region;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use JsonException;
@@ -95,6 +96,8 @@ class ComplaintController extends Controller
 				'data' => ComplaintResource::make($complaint),
 			]);
 		} catch (JsonException $e) {
+			Log::error($e->getMessage());
+
 			return response()->json([
 				'status' => 'error',
 				'message' => $e->getMessage(),

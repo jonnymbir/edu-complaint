@@ -8,7 +8,7 @@
 						<div class="round rounded bg-primary d-flex align-items-center justify-content-center">
 							<i class="fas fa-database text-white fs-7" title="BTC"></i>
 						</div>
-						<h6 class="mb-0 ms-3">Total Grievances</h6>
+						<h6 class="mb-0 ms-3">Total Concerns</h6>
 					</div>
 					<div class="d-flex align-items-center justify-content-between mt-4">
 						<h3 class="mb-0 fw-semibold fs-7">{{ $total_complaints }}</h3>
@@ -28,7 +28,7 @@
 						<div class="round rounded bg-danger d-flex align-items-center justify-content-center">
 							<i class="fas fa-comment text-white fs-7" title="ETH"></i>
 						</div>
-						<h6 class="mb-0 ms-3">Grievances Addressed</h6>
+						<h6 class="mb-0 ms-3">Concerns Addressed</h6>
 					</div>
 					<div class="d-flex align-items-center justify-content-between mt-4">
 						<h3 class="mb-0 fw-semibold fs-7">{{ $complaints_addressed }}</h3>
@@ -48,7 +48,7 @@
 						<div class="round rounded bg-success d-flex align-items-center justify-content-center">
 							<i class="fas fa-forward text-white fs-7" title="LTC"></i>
 						</div>
-						<h6 class="mb-0 ms-3">Grievances Forwarded</h6>
+						<h6 class="mb-0 ms-3">Concerns Forwarded</h6>
 					</div>
 					<div class="d-flex align-items-center justify-content-between mt-4">
 						<h3 class="mb-0 fw-semibold fs-7">{{ $complaints_forwarded }}</h3>
@@ -68,7 +68,7 @@
 						<div class="round rounded bg-warning d-flex align-items-center justify-content-center">
 							<i class="fas fa-user text-white fs-7" title="XRP"></i>
 						</div>
-						<h6 class="mb-0 ms-3">Grievances Overdue</h6>
+						<h6 class="mb-0 ms-3">Concerns Overdue</h6>
 					</div>
 					<div class="d-flex align-items-center justify-content-between mt-4">
 						<h3 class="mb-0 fw-semibold fs-7">{{ $complaints_overdue }}</h3>
@@ -92,8 +92,8 @@
 				<div class="card-body">
 					<div class="d-sm-flex d-block align-items-center justify-content-between mb-7">
 						<div class="mb-3 mb-sm-0">
-							<h5 class="card-title fw-semibold">Recent Complaints</h5>
-							<p class="card-subtitle mb-0">List of recent complaints</p>
+							<h5 class="card-title fw-semibold">Recent Concerns</h5>
+							<p class="card-subtitle mb-0">List of recent concerns</p>
 						</div>
 						<div>
 							<select class="form-select" wire:model.live="date_search">

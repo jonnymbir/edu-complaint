@@ -4,7 +4,7 @@
 		<div class="modal-content">
 			<div class="modal-header d-flex align-items-center">
 				<h4 class="modal-title" id="myModalLabel">
-					Create New Complaint
+					Create New Concern
 				</h4>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
@@ -176,7 +176,7 @@
 				</div>
 				<div class="modal-footer">
 					<button class="btn btn-info rounded-pill px-4 mt-3" type="submit" wire:loading.attr="disabled">
-						Add Complaint
+						Add Concern
 					</button>
 					<button type="button" class="btn btn-danger rounded-pill px-4 mt-3" data-bs-dismiss="modal">
 						Close

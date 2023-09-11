@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/complaint', \App\Livewire\Guest\ComplaintComponent::class)->name('complaint');
 
 Route::get('/login', \App\Livewire\Admin\Auth\LoginComponent::class)->name('login');
-Route::get('/logout', function () {
+Route::get('/logout', static function () {
 	activity()
 		->inLog('User Activity Log')
 		->causedBy(auth()->user())
@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth']], static function (){
 	Route::get('/users', \App\Livewire\Admin\UserComponent::class)->name('users');
 	Route::get('/roles', \App\Livewire\Admin\RoleComponent::class)->name('roles');
 	Route::get('/regions', \App\Livewire\Admin\RegionComponent::class)->name('regions');
-	Route::get('/complaint', \App\Livewire\Admin\ComplaintComponent::class)->name('complaints');
+	Route::get('/concern', \App\Livewire\Admin\ComplaintComponent::class)->name('complaints');
 	Route::get('/divisions', \App\Livewire\Admin\DivisionComponent::class)->name('divisions');
 	Route::get('/units', \App\Livewire\Admin\UnitComponent::class)->name('units');
 	Route::get('/activity_logs', \App\Livewire\Admin\ActivityLogComponent::class)->name('activity_logs');

@@ -1,4 +1,4 @@
-@section('title', 'Complaints')
+@section('title', 'Concerns')
 
 @section('styles')
 @endsection
@@ -11,7 +11,7 @@
 		<!-- --------------------------------------------------- -->
 		@component('components.admin.bread-crum-component')
 			@slot('title')
-				List of Complaints
+				List of Concerns
 			@endslot
 		@endcomponent
 		
@@ -28,7 +28,7 @@
 										<div class="col-sm-3 col-md-3 form-group">
 											<label for="search">Search</label>
 											<input type="text" class="form-control"
-											       placeholder="Search by Complaint ID"
+											       placeholder="Search by Concern ID"
 											       wire:model.live.debounce.550ms="search"/>
 										</div>
 										<div class="col-sm-3 col-md-3 form-group">
@@ -52,7 +52,7 @@
 											<div class="col-auto d-flex align-items-center ml-auto form-group">
 												<button class="btn btn-primary btn-block" data-bs-toggle="modal"
 												        data-bs-target="#addComplaintModal" wire:click="resetForm">
-													Add New Complaint
+													Add New Concern
 												</button>
 											</div>
 										@endcan

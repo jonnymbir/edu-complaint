@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Models\Complaint;
 use DateTimeImmutable;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -35,13 +36,12 @@ class WhatsAppNotices extends Notification implements ShouldQueue
 		return [WhatsAppChannel::class];
 	}
 
-
 	/**
 	 * Get the whatsapp representation of the notification.
 	 *
 	 * @param object $notifiable
 	 * @return WhatsAppTemplate
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function toWhatsApp(object $notifiable): WhatsAppTemplate
 	{
@@ -88,7 +88,6 @@ class WhatsAppNotices extends Notification implements ShouldQueue
 			->body(Component::text($this->complaint->response))
 			->body(Component::dateTime(new DateTimeImmutable($this->complaint->created_at), 'l, dS M, Y @H:i A'))
 			->to($this->complaint->telephone);
-
 	}
 
     /**

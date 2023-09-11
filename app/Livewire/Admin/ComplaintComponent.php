@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use JsonException;
@@ -119,6 +120,7 @@ class ComplaintComponent extends Component
 
 	public function resetForm(): void
 	{
+		$this->complaint = null;
 		$this->first_name = null;
 		$this->middle_name = null;
 		$this->last_name = null;
@@ -148,11 +150,11 @@ class ComplaintComponent extends Component
 			]);
 
 			activity()
-				->inLog('Complaint Activity Log')
+				->inLog('Concerns Activity Log')
 				->causedBy(auth()->user())
 				->performedOn($this->complaint)
 				->event('assigned category')
-				->log('Complaint category assigned to complaint '.$this->complaint->ticket_number.' by '.auth()->user()->name.'.');
+				->log('Concern category assigned to complaint '.$this->complaint->ticket_number.' by '.auth()->user()->name.'.');
 
 			session()->flash('success', 'Category assigned successfully.');
 		}
@@ -178,25 +180,25 @@ class ComplaintComponent extends Component
 		$this->middle_name = $this->complaint->middle_name;
 		$this->last_name = $this->complaint->last_name;
 		$this->email_address = $this->complaint->email_address;
-		$this->telephone  = $this->complaint->telephone;
-		$this->sex  = $this->complaint->sex;
-		$this->age_range  = $this->complaint->age_range;
-		$this->region  = \App\Models\Region::find($this->complaint->region_id)->name;
-		$this->district  = \App\Models\District::find($this->complaint->district_id)->name;
-		$this->stakeholder_type  = $this->complaint->stakeholder_type;
-		$this->concern  = $this->complaint->concern;
-		$this->details  = $this->complaint->details;
-		$this->attachments  = $this->complaint->attachments;
-		$this->response_channel  = $this->complaint->response_channel;
-		$this->is_anonymous  = $this->complaint->is_anonymous === 1 ? "Yes" : "No";
-		$this->status  = $this->complaint->status;
+		$this->telephone = $this->complaint->telephone;
+		$this->sex = $this->complaint->sex;
+		$this->age_range = $this->complaint->age_range;
+		$this->region = \App\Models\Region::find($this->complaint->region_id)->name;
+		$this->district = \App\Models\District::find($this->complaint->district_id)->name;
+		$this->stakeholder_type = $this->complaint->stakeholder_type;
+		$this->concern = $this->complaint->concern;
+		$this->details = $this->complaint->details;
+		$this->attachments = $this->complaint->attachments;
+		$this->response_channel = $this->complaint->response_channel;
+		$this->is_anonymous = $this->complaint->is_anonymous === 1 ? "Yes" : "No";
+		$this->status = $this->complaint->status;
 
 		activity()
-			->inLog('Complaint Activity Log')
+			->inLog('Concerns Activity Log')
 			->causedBy(auth()->user())
 			->performedOn($this->complaint)
-			->event('viewed complaint')
-			->log('Complaint '.$this->complaint->ticket_number.' was viewed by '.auth()->user()->name.' at '.now());
+			->event('viewed concern')
+			->log('Concern '.$this->complaint->ticket_number.' was viewed by '.auth()->user()->name.' at '.now());
 	}
 
 	public function showCommentForm($id): void
@@ -226,6 +228,9 @@ class ComplaintComponent extends Component
 		session()->flash('success', 'Comment added successfully.');
 	}
 
+	/**
+	 * @throws JsonException
+	 */
 	public function submitResponse(): void
 	{
 		$this->authorize('complaints.reply');
@@ -246,15 +251,27 @@ class ComplaintComponent extends Component
 	//		toastr()->success('Response added successfully.');
 			session()->flash('success', 'Response added successfully.');
 		} catch (CouldNotSendNotification $e) {
-//			session()->flash('error', 'Response failed. please check the telephone number and try again or contact the administrator.');
-			session()->flash('error', $e->getMessage());
+			Log::error($e->getMessage());
+
+			$object = json_decode($e->getMessage(), false, 512, JSON_THROW_ON_ERROR);
+
+			$errorMessage = null;
+			if (isset($object->error)) {
+				$errorMessage = $object->error->message;
+			}
+
+			session()->flash('error', 'Response failed. ' . $errorMessage ?? $e->getMessage());
+//			session()->flash('error', 'Response failed. ' . $e->getMessage());
+		} catch (Exception $e) {
+			Log::error($e->getMessage());
+			session()->flash('error', 'Response failed. ' . $e->getMessage());
 		}
 	}
 
 	/**
 	 * @throws JsonException
 	 */
-	public function createComplaint ()
+	public function createComplaint()
 	{
 		$this->authorize('complaints.create');
 
@@ -295,7 +312,7 @@ class ComplaintComponent extends Component
 
 //		session()->flash('success', 'Complaint submitted successfully');
 //		toastr()->success('Complaint submitted successfully!', 'Thank you');
-		return redirect()->route('complaints')->with('success', 'Complaint submitted successfully');
+		return redirect()->route('complaints')->with('success', 'Concern submitted successfully');
 	}
 
 	public function updatedDivision(): void
@@ -365,11 +382,11 @@ class ComplaintComponent extends Component
 				$message->from(config('mail.from.address'), config('mail.from.name'));
 				$message->to($this->forward_type === 'division' ? $this->div_email : $this->unit_email, $this->forward_type === 'division' ? $div->div_contact_person : $uni->unit_contact_person);
 				$message->cc($ccRecipients);
-				$message->subject('Forwarded Complaint');
+				$message->subject('Forwarded Concern');
 			});
 
 			activity()
-				->inLog('Complaint Activity Log')
+				->inLog('Concern Activity Log')
 				->causedBy(auth()->user())
 				->performedOn($this->complaint)
 				->event('forwarded complaint')
@@ -379,18 +396,19 @@ class ComplaintComponent extends Component
 
 			$this->reset('division', 'unit', 'div_email', 'unit_email', 'cc');
 
-			session()->flash('success', 'Complaint forwarded successfully.');
+			session()->flash('success', 'Concern forwarded successfully.');
 //			toastr()->success('Complaint forwarded successfully.');
 		} catch (Exception $e) {
 			DB::rollBack();
+			Log::error($e->getMessage());
 			activity()
 				->causedBy(auth()->user())
 				->performedOn($this->complaint)
 				->event('forwarded')
-				->log('Complaint forwarding failed due to an error.');
+				->log('Concern forwarding failed due to an error.');
 
 //			toastr()->error('Complaint forwarding failed. ' . $e->getMessage());
-			session()->flash('error', 'Complaint forwarding failed.' . $e->getMessage());
+			session()->flash('error', 'Concern forwarding failed.' . $e->getMessage());
 		}
 	}
 }
