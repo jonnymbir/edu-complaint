@@ -36,7 +36,7 @@
 					Select all
 				</label>
 				<hr>
-				@forelse($permissions->groupBy(fn($permission) => $words = explode('.', $permission->name)[0]) as $firstWord => $permissionsByFirstWord)
+				@foreach($permissions->groupBy(fn($permission) => $words = explode('.', $permission->name)[0]) as $firstWord => $permissionsByFirstWord)
 					<h6>{{ Str::headline($firstWord) }}</h6>
 					<ul>
 						@forelse($permissionsByFirstWord as $permission)
@@ -58,7 +58,7 @@
 							<li>No permissions found</li>
 						@endforelse
 					</ul>
-					@endforeach
+				@endforeach
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-info rounded-pill px-4 mt-3" type="button" wire:click.prevent="update">
