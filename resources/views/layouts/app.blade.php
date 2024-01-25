@@ -4,12 +4,12 @@
 <head>
 	<!--  Title -->
 	<title>{{ config('app.name') }} -  @yield('title', 'Enquiry')</title>
-	
+
 	<!--  Required Meta Tag -->
 	@if(app()->environment('production'))
 		<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 	@endif
-	
+
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="handheld-friendly" content="true" />
 	<meta name="MobileOptimized" content="width" />
@@ -17,16 +17,16 @@
 	<meta name="author" content="GALOP-Ghana Accountability for Learning Outcomes Project" />
 	<meta name="keywords" content="GALOP,Ghana,Accountability for Learning,Outcomes, Project" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	
+
 	<!--  Favicon -->
 	<link rel="icon" sizes="16x16" href="{{asset('assets/images/favicon.png')}}">
 	<!-- Owl Carousel  -->
 	<link rel="stylesheet" href="{{asset('dist/libs/owl.carousel/dist/assets/owl.carousel.min.css')}}">
 	<!-- Core Css -->
 	<link  id="themeColors"  rel="stylesheet" href="{{asset('dist/css/style.min.css')}}" />
-	
+
 	@livewireStyles
-	
+
 	@yield('styles')
 </head>
 
@@ -39,19 +39,19 @@
 	<div class="preloader">
 		<img src="{{ asset('dist/images/favicon.png') }}" alt="loader" class="lds-ripple img-fluid" />
 	</div>
-	
+
 	@include('livewire/admin/shared/sidebar')
 	<!--  Main wrapper -->
 	<div class="body-wrapper">
 		@include('livewire.admin.shared.header')
-		
+
 		<div class="container-fluid">
 			@yield('content')
 		</div>
 	</div>
 	<div class="dark-transparent sidebartoggler"></div>
 	<div class="dark-transparent sidebartoggler"></div>
-	
+
 	<!--  Customizer -->
 	<!--  Import Js Files -->
 	<script src="{{asset('dist/libs/jquery/dist/jquery.min.js')}}"></script>
@@ -68,7 +68,7 @@
 	<script src="{{asset('dist/libs/owl.carousel/dist/owl.carousel.min.js')}}"></script>
 {{--	<script src="{{asset('dist/libs/apexcharts/dist/apexcharts.min.js')}}"></script>--}}
 	<script src="{{asset('dist/js/dashboard.js')}}"></script>
-	
+
 	@livewireScripts
 
 	@yield('scripts')

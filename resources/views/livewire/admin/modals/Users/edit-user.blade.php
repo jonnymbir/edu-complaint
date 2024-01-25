@@ -11,13 +11,13 @@
 			@if(isset($user))
 				<form wire:submit.prevent="update">
 					<div class="modal-body">
-						
+
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-6 mb-3">
 									<label for="first_name">First name</label>
 									<input type="text" class="form-control" id="first_name" placeholder="First name" value="Mark" required wire:model="first_name">
-									
+
 									@error('first_name')
 									<span class="text-danger">{{ $message }}</span>
 									@enderror
@@ -25,7 +25,7 @@
 								<div class="col-md-6 mb-3">
 									<label for="last_name">Last name</label>
 									<input type="text" class="form-control" id="last_name" placeholder="Last name" value="Otto" required wire:model="last_name">
-									
+
 									@error('last_name')
 									<span class="text-danger">{{ $message }}</span>
 									@enderror
@@ -34,7 +34,7 @@
 									<label for="name">Username</label>
 									<div class="input-group">
 										<input type="text" class="form-control" id="name" placeholder="Username" required wire:model="name">
-										
+
 										@error('name')
 										<span class="text-danger">{{ $message }}</span>
 										@enderror
@@ -45,7 +45,7 @@
 									<div class="input-group">
 										<span class="input-group-text" id="email">@</span>
 										<input type="email" class="form-control" id="email" placeholder="Email" aria-describedby="email" required wire:model="email">
-										
+
 										@error('email')
 										<span class="text-danger">{{ $message }}</span>
 										@enderror
@@ -56,7 +56,7 @@
 								<div class="col-md-6 mb-3">
 									<label for="password">Password</label>
 									<input type="password" class="form-control" id="password" placeholder="Enter Password" wire:model="password">
-									
+
 									@error('password')
 									<span class="text-danger">{{ $message }}</span>
 									@enderror
@@ -73,9 +73,9 @@
 									</select>
 								</div>
 							</div>
-						
+
 						</div>
-					
+
 					</div>
 					<div class="modal-footer">
 						<button class="btn btn-info rounded-pill px-4 mt-3" type="submit">

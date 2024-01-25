@@ -10,7 +10,7 @@
 				List Users
 			@endslot
 		@endcomponent
-		
+
 		<section>
 			<div class="row">
 				<div class="col-12">
@@ -28,7 +28,7 @@
 {{--												<i class="fa fa-times"></i>--}}
 {{--											</button>--}}
 										</div>
-										
+
 										<!-- Button ========================= -->
 										<div class="col-auto d-flex align-items-center ml-auto form-group">
 											@can('users.create')
@@ -37,14 +37,14 @@
 												</button>
 											@endcan
 										</div>
-									
+
 									</div>
 								</div>
 							</div>
 							<!-- Filter End -->
 						</div>
 						<div class="card-body">
-							
+
 							<table class="table mb-0">
 								<thead>
 								<tr>
@@ -78,7 +78,7 @@
 															<i class="fa fa-pencil-alt"></i>
 														</button>
 													@endcan
-													
+
 													@can('users.delete')
 														<button class="btn btn-sm btn-danger shadow btn-xs sharp" onclick="confirm('Are you sure you want to delete this user?') || event.stopImmediatePropagation()"
 														        wire:click="delete({{ $user->id }})">
@@ -97,18 +97,18 @@
 							</div>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 		</section>
-		
+
 		@can('users.create')
 			@include('livewire.admin.modals.Users.create-user')
 		@endcan
-		
+
 		@can('users.edit')
 			@include('livewire.admin.modals.Users.edit-user')
 		@endcan
-		
+
 	</div>
 </div>
