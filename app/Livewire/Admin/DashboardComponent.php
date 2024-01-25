@@ -30,8 +30,7 @@ class DashboardComponent extends Component
 	        'complaints_forwarded' => \App\Models\Complaint::where('is_forwarded', true)->count(),
 	        'complaints_overdue' => \App\Models\Complaint::where('response', null)
 		        ->where(function ($query) {
-			        $query->where('status','overdue')
-				        ->orWhere('created_at', '<', now()->subDays(15));
+			        $query->where('status','overdue');
 		        })
 		        ->count(),
 	        'count_users' => \App\Models\User::count(),

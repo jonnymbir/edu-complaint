@@ -10,6 +10,14 @@ class LoginComponent extends Component
 	public $password;
 	public $remember_me = false;
 
+    public function mount()
+    {
+        if (auth()->check())
+        {
+            return redirect()->route('dashboard');
+        }
+    }
+
     public function render()
     {
         return view('livewire.admin.auth.login-component')->extends('layouts.auth');

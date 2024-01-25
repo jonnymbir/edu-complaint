@@ -89,6 +89,7 @@ class ComplaintComponent extends Component
 		$this->district = 0;
 
 		$this->filter = request()?->query('filter', $this->filter);
+//        dd($this->filter);
 	}
 
     public function render()
@@ -99,7 +100,13 @@ class ComplaintComponent extends Component
 			'complaints' => Complaint::with(['comments','complaintCategory'])
                 ->latest()
 				->where('ticket_number', 'like', '%'.$this->search.'%')
-				->where('status', 'like', '%'.$this->filter.'%')
+				->where(function ($query) {
+                    if ($this->filter === 'forwarded') {
+                        $query->where('is_forwarded', true);
+                    } else {
+                        $query->where('status', 'like', '%' . $this->filter . '%');
+                    }
+                })
 				->when('complaint_category', function ($query) {
 					if ($this->search_category){
 						$query->where('complaint_category_id', $this->search_category);

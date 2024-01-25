@@ -28,6 +28,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'password_changed_at'
     ];
 
     /**
@@ -47,6 +48,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password_changed_at' => 'datetime',
         'password' => 'hashed',
     ];
 
@@ -64,6 +66,7 @@ class User extends Authenticatable
 				'first_name',
 				'last_name',
 				'email',
+                'password_changed_at',
 			])
 			->logOnlyDirty()
 			->setDescriptionForEvent(fn (string $eventName) =>  "This Record has been {$eventName} by user: " . auth()->user()?->name ?? 'Unknown')

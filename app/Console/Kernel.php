@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-         $schedule->command('complaint:overdue')->dailyAt('00:00');
+         $schedule->command('complaint:overdue')->everyFiveMinutes();
     }
 
     /**

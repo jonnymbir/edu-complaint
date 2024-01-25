@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/complaint', \App\Livewire\Guest\ComplaintComponent::class)->name('complaint');
 
 Route::get('/login', \App\Livewire\Admin\Auth\LoginComponent::class)->name('login');
+Route::get('/change-password', \App\Livewire\Admin\Auth\ChangePasswordComponent::class)->name('change_password')->middleware('auth');
 Route::get('/logout', static function () {
 	activity()
 		->inLog('User Activity Log')
@@ -35,7 +36,7 @@ Route::get('/logout', static function () {
 })->name('logout');
 
 //Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], static function (){
-Route::group(['middleware' => ['auth']], static function (){
+Route::group(['middleware' => ['auth', 'password_change_check']], static function (){
 	Route::get('/', \App\Livewire\Admin\DashboardComponent::class)->name('dashboard');
 	Route::get('/users', \App\Livewire\Admin\UserComponent::class)->name('users');
 	Route::get('/roles', \App\Livewire\Admin\RoleComponent::class)->name('roles');
