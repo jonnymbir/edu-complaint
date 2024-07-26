@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ComplaintCategory extends Model
 {
@@ -47,8 +48,18 @@ class ComplaintCategory extends Model
 		});
 	}
 
-	public function complaints(): HasMany
-	{
-		return $this->hasMany(Complaint::class);
-	}
+	// public function complaints(): HasMany
+	// {
+	// 	return $this->hasMany(Complaint::class);
+	// }
+
+    /**
+     * The complaints that belong to the ComplaintCategory
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function complaints(): BelongsToMany
+    {
+        return $this->belongsToMany(Complaint::class, 'category_complaint', 'category_id', 'complaint_id');
+    }
 }

@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Complaint extends Model
 {
@@ -116,10 +117,20 @@ class Complaint extends Model
 		return Str::headline($value);
 	}
 
-	public function complaintCategory(): BelongsTo
-	{
-		return $this->belongsTo(ComplaintCategory::class);
-	}
+	// public function complaintCategory(): BelongsTo
+	// {
+	// 	return $this->belongsTo(ComplaintCategory::class);
+	// }
+
+    /**
+     * The categories that belong to the Complaint
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(ComplaintCategory::class, 'category_complaint', 'complaint_id', 'category_id');
+    }
 
 	public function region(): BelongsTo
 	{

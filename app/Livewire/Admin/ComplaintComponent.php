@@ -78,7 +78,8 @@ class ComplaintComponent extends Component
 	public $cc;
 	public ?string $note = '';
 
-	public ?int $complaint_category = null;
+    public ?int $complaint_category = null;
+	public array $selected_complaint_categories = [];
 
 	public function mount(): void
 	{
@@ -97,7 +98,7 @@ class ComplaintComponent extends Component
 	    $this->authorize('complaints.list');
 
 	    return view('livewire.admin.complaint-component',[
-			'complaints' => Complaint::with(['comments','complaintCategory'])
+			'complaints' => Complaint::with(['comments','categories'])
                 ->latest()
 				->where('ticket_number', 'like', '%'.$this->search.'%')
 				->where(function ($query) {
@@ -109,7 +110,9 @@ class ComplaintComponent extends Component
                 })
 				->when('complaint_category', function ($query) {
 					if ($this->search_category){
-						$query->where('complaint_category_id', $this->search_category);
+                        $query->whereHas('categories', function ($q) {
+                            $q->where('slug', $this->search_category);
+                        });
 					}
 				})
                 ->paginate(10),
@@ -147,25 +150,42 @@ class ComplaintComponent extends Component
 	}
 
 	// update on select of complaint category
-	public function updatedComplaintCategory($value): void
-	{
-		$this->authorize('complaints.view');
+	// public function updatedComplaintCategory($value): void
+	// {
+	// 	$this->authorize('complaints.view');
 
-		if (!is_null($value) && !is_null($this->complaint)) {
-			Complaint::where('id', $this->complaint->id)->update([
-				'complaint_category_id' => $value,
-			]);
+	// 	if (!is_null($value) && !is_null($this->complaint)) {
+	// 		Complaint::where('id', $this->complaint->id)->update([
+	// 			'complaint_category_id' => $value,
+	// 		]);
 
-			activity()
-				->inLog('Concerns Activity Log')
-				->causedBy(auth()->user())
-				->performedOn($this->complaint)
-				->event('assigned category')
-				->log('Concern category assigned to complaint '.$this->complaint->ticket_number.' by '.auth()->user()->name.'.');
+	// 		activity()
+	// 			->inLog('Concerns Activity Log')
+	// 			->causedBy(auth()->user())
+	// 			->performedOn($this->complaint)
+	// 			->event('assigned category')
+	// 			->log('Concern category assigned to complaint '.$this->complaint->ticket_number.' by '.auth()->user()->name.'.');
 
-			session()->flash('success', 'Category assigned successfully.');
-		}
-	}
+	// 		session()->flash('success', 'Category assigned successfully.');
+	// 	}
+	// }
+
+    public function assignCategoryToComplaint(): void
+    {
+        $this->authorize('complaints.view');
+
+        $complaint = Complaint::where('id', $this->complaint->id)->first();
+        $complaint->categories()->sync($this->selected_complaint_categories);
+
+        activity()
+            ->inLog('Concerns Activity Log')
+            ->causedBy(auth()->user())
+            ->performedOn($this->complaint)
+            ->event('assigned category')
+            ->log('Concern category assigned to complaint '.$this->complaint->ticket_number.' by '.auth()->user()->name.'.');
+
+        session()->flash('success', 'Category assigned successfully.');
+    }
 
 	public function updatedRegion($region): void
 	{
@@ -181,7 +201,8 @@ class ComplaintComponent extends Component
 
 		$this->complaint = Complaint::findOrFail($id);
 
-		$this->complaint_category = $this->complaint->complaint_category_id;
+		// $this->complaint_category = $this->complaint->complaint_category_id;
+		$this->selected_complaint_categories = $this->complaint->categories->pluck('id')->toArray();
 		$this->ticket_number = $this->complaint->ticket_number;
 		$this->first_name = $this->complaint->first_name;
 		$this->middle_name = $this->complaint->middle_name;
