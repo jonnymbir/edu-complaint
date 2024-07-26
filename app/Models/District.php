@@ -14,9 +14,10 @@ class District extends Model
 	protected $table = 'districts';
 
 	protected $fillable = [
+		'region_id',
 		'name',
 		'code',
-		'region_id',
+        'town_locality',
 	];
 
 	public function getActivitylogOptions(): LogOptions
