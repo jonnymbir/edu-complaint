@@ -187,6 +187,18 @@
                                                             </button>
                                                             {{--														@endif --}}
                                                         @endcan
+
+                                                        @can('complaints.forward')
+                                                            {{--														@if (!$complaint->is_forwarded) --}}
+                                                            <button class="btn btn-sm btn-secondary shadow btn-xs sharp me-1"
+                                                                title="Print Complaint" wire:loading.remove wire:click="printComplaint({{ $complaint->id }})">
+                                                                <i class="fa fa-print" aria-hidden="true"></i>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-secondary shadow btn-xs sharp me-1"
+                                                                title="Printing..." wire:loading wire:target="printComplaint({{ $complaint->id }})">
+                                                                <i class="fa fa-spinner fa-spin"></i>
+                                                            </button>
+                                                        @endcan
                                                     </div>
                                                 </td>
                                             @endif

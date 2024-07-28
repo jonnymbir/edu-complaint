@@ -2,21 +2,21 @@
 
 namespace App\Livewire\Admin;
 
-use App\Models\Complaint;
+use Exception;
+use JsonException;
+use App\Models\Unit;
+use Livewire\Component;
 use App\Models\District;
 use App\Models\Division;
-use App\Models\Unit;
-use Exception;
-use Illuminate\Broadcasting\Channel;
+use App\Models\Complaint;
+use Livewire\WithPagination;
+use Livewire\Attributes\Rule;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
-use JsonException;
-use Livewire\Attributes\Rule;
-use Livewire\Component;
-use Livewire\WithPagination;
 use NotificationChannels\WhatsApp\Exceptions\CouldNotSendNotification;
 
 class ComplaintComponent extends Component
@@ -439,4 +439,17 @@ class ComplaintComponent extends Component
 			session()->flash('error', 'Concern forwarding failed.' . $e->getMessage());
 		}
 	}
+
+    public function printComplaint($id)
+    {
+        // print complaint to a pdf file
+        $complaint = Complaint::findOrFail($id);
+
+        $pdf = \PDF::loadView('emails.complaint_print', compact('complaint'));
+
+        // return $pdf->download('complaint-'.$complaint->ticket_number.'.pdf');
+        return response()->streamDownload(function () use ($pdf, $complaint) {
+            echo $pdf->stream();
+        }, 'complaint-'.$complaint->ticket_number.'.pdf');
+    }
 }
