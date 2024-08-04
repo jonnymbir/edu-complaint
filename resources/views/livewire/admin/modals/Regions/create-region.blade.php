@@ -40,7 +40,7 @@
 
                                                 <div class="row">
                                                     {{-- one input and a plus button to add more input for district --}}
-                                                    <div class="col-md-6 mb-3">
+                                                    <div class="col-md-12 mb-3">
                                                         <label for="first_name">District name</label>
                                                         <input type="text" class="form-control" id="first_name"
                                                             placeholder="District name" required
@@ -50,39 +50,18 @@
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
-
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="town_name">Specific Town/Locality</label>
-                                                        <input type="text" class="form-control" id="town_name"
-                                                            placeholder="Town/Locality name" required
-                                                            wire:model="town_locality.0">
-
-                                                        @error('town_locality.0')
-                                                            <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
                                                 </div>
 
                                                 @if (count($district_name) > 1)
                                                     @for ($i = 1, $iMax = count($district_name); $i < $iMax; $i++)
                                                         <div class="row">
-                                                            <div class="col-md-6 mb-3">
+                                                            <div class="col-md-12 mb-3">
                                                                 <label for="district_name">District name</label>
                                                                 <input type="text" class="form-control"
                                                                     id="district_name" placeholder="District name" required
                                                                     wire:model="district_name.{{ $i }}">
 
                                                                 @error('district_name.' . $i)
-                                                                    <span class="text-danger">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                            <div class="col-md-6 mb-3">
-                                                                <label for="town_name">Specific Town/Locality</label>
-                                                                <input type="text" class="form-control" id="town_name"
-                                                                    placeholder="Town/Locality name" required
-                                                                    wire:model="town_locality.{{ $i }}">
-
-                                                                @error('town_locality.' . $i)
                                                                     <span class="text-danger">{{ $message }}</span>
                                                                 @enderror
                                                             </div>

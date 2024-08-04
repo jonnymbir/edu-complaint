@@ -19,7 +19,6 @@ class RegionComponent extends Component
 	public $region_name;
 	public $districts;
 	public $district_name = [];
-	public $town_locality = [];
 
     public function render()
     {
@@ -36,16 +35,13 @@ class RegionComponent extends Component
 	public function addDistrict()
 	{
 		$this->district_name[] = '';
-		$this->town_locality[] = '';
 	}
 
 	public function removeDistrict($index)
 	{
 		unset($this->district_name[$index]);
-        unset($this->town_locality[$index]);
 
 		$this->district_name = array_values($this->district_name);
-        $this->town_locality = array_values($this->town_locality);
 	}
 
 	public function store()
@@ -55,7 +51,6 @@ class RegionComponent extends Component
 		$this->validate([
 			'region_name' => 'required|unique:regions,name',
 			'district_name.*' => 'required',
-            'town_locality.*' => 'required',
 		]);
 
 		$this_regions = \App\Models\Region::create([
@@ -70,12 +65,11 @@ class RegionComponent extends Component
 					'region_id' => $this_regions->id,
 					'name' => $district_name,
 					'code' => strtoupper(substr($district_name, 0, 3)),
-                    'town_locality' => $this->town_locality[array_search($district_name, $this->district_name)],
 				]);
 			}
 		}
 
-		$this->reset('region_name', 'district_name', 'town_locality');
+		$this->reset('region_name', 'district_name');
 
 		return redirect()->route('regions')->with('success', 'Region created successfully.');
 	}
@@ -111,12 +105,11 @@ class RegionComponent extends Component
 					'region_id' => $region->id,
 					'name' => $district_name,
 					'code' => strtoupper(substr($district_name, 0, 3)),
-                    'town_locality' => $this->town_locality[array_search($district_name, $this->district_name)],
 				]);
 			}
 		}
 
-		$this->reset('region_id', 'region_name', 'district_name', 'town_locality');
+		$this->reset('region_id', 'region_name', 'district_name');
 
 		return redirect()->route('regions')->with('success', 'Region updated successfully.');
 	}

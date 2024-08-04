@@ -1,7 +1,7 @@
 @section('title', 'List Regions/Districts')
 
 <div>
-	
+
 	<div class="container-fluid">
 		<!-- --------------------------------------------------- -->
 		<!--  Form Basic Start -->
@@ -11,7 +11,7 @@
 				List Regions/Districts
 			@endslot
 		@endcomponent
-		
+
 		<section>
 			<div class="row">
 				<div class="col-12">
@@ -26,7 +26,7 @@
 											<label for="search">Search</label>
 											<input type="text" class="form-control" placeholder="Search available parameters here" wire:model.live.debounce.550ms="search" />
 										</div>
-										
+
 										@can('regions.create')
 											<!-- Button ========================= -->
 											<div class="col-auto d-flex align-items-center ml-auto form-group">
@@ -35,14 +35,14 @@
 												</button>
 											</div>
 										@endcan
-									
+
 									</div>
 								</div>
 							</div>
 							<!-- Filter End -->
 						</div>
 						<div class="card-body">
-							
+
 							<table class="table mb-0">
 								<thead>
 								<tr>
@@ -70,7 +70,7 @@
 															<i class="fa fa-pencil-alt"></i>
 														</button>
 													@endcan
-													
+
 													@can('regions.delete')
 														<button class="btn btn-sm btn-danger shadow btn-xs sharp" onclick="confirm('Are you sure you want to delete this region?') || event.stopImmediatePropagation()"
 														        wire:click="delete({{ $region->id }})">
@@ -84,25 +84,25 @@
 								@endforeach
 								</tbody>
 							</table>
-							
+
 							<div class="mt-3">
 								{{ $regions->links() }}
 							</div>
 						</div>
 					</div>
-				
+
 				</div>
 			</div>
 		</section>
-		
+
 		@can('regions.create')
 			@include('livewire.admin.modals.Regions.create-region')
 		@endcan
-		
+
 		@can('regions.edit')
 			@include('livewire.admin.modals.Regions.edit-region')
 		@endcan
-	
+
 	</div>
-	
+
 </div>
