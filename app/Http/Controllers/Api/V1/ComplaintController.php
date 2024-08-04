@@ -31,6 +31,8 @@ class ComplaintController extends Controller
 	 */
 	public function publish_question (Request $request): \Illuminate\Http\JsonResponse
 	{
+        // Log::info('Request received', $request->all());
+        // dd($request->all());
 		$validator = Validator::make($request->all(), [
 			'first_name' => ['required', 'string'],
 			'middle_name' => ['nullable', 'string'],
@@ -41,6 +43,8 @@ class ComplaintController extends Controller
 			'age_range' => ['required', 'string'], // 'required', 'string', 'in:0-17,18-35,36-50,51-65,66+
 			'region' => ['required', 'exists:regions,id'],
 			'district' => ['required', 'exists:districts,id'],
+            'town' => ['required', 'string'],
+            'school' => ['nullable', 'string'],
 			'stakeholder_type' => ['required', 'string'],
 			'concern' => ['required', 'string'],
 			'details' => ['required', 'string'],
@@ -76,6 +80,8 @@ class ComplaintController extends Controller
 				'age_range' => $request->input('age_range'),
 				'region_id' => $request->input('region'),
 				'district_id' => $request->input('district'),
+                'town_locality' => $request->input('town'),
+                'school' => $request->input('school'),
 				'stakeholder_type' => strtolower($request->input('stakeholder_type')),
 				'concern' => strtolower($request->input('concern')),
 				'details' => $request->input('details'),

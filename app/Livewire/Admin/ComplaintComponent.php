@@ -112,6 +112,9 @@ class ComplaintComponent extends Component
 					if ($this->search_category){
                         $query->whereHas('categories', function ($q) {
                             $q->where('slug', $this->search_category);
+                        })
+                        ->orWhereHas('complaintCategory', function ($q) {
+                            $q->where('slug', 'like', '%'.$this->search_category.'%');
                         });
 					}
 				})
@@ -444,6 +447,13 @@ class ComplaintComponent extends Component
     {
         // print complaint to a pdf file
         $complaint = Complaint::findOrFail($id);
+
+        activity()
+            ->inLog('Concerns Activity Log')
+            ->causedBy(auth()->user())
+            ->performedOn($complaint)
+            ->event('printed concern')
+            ->log('Concern '.$complaint->ticket_number.' was downloaded by '.auth()->user()->name.' at '.now());
 
         $pdf = \PDF::loadView('emails.complaint_print', compact('complaint'));
 

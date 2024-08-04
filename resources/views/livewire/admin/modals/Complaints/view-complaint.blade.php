@@ -117,10 +117,11 @@
                                     <span class="spinner-border spinner-border-sm" role="status"
                                         aria-hidden="true"></span> &nbsp; Assigning...
                                 </button>
+                                (Click to assign categories)
 
                                 <select class="form-select" id="complaint_category"
                                     wire:model.lazy="selected_complaint_categories" multiple>
-                                    <option value="">Select Category</option>
+                                    <option value="" disabled>Select Category</option>
                                     @foreach ($complaint_categories as $key => $complaint_category)
                                         <option value="{{ $complaint_category->id }}">
                                             {{ $complaint_category->name }}</option>

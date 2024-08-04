@@ -73,7 +73,7 @@
                                         <th scope="col">Full Name</th>
                                         <th scope="col">Telephone</th>
                                         <th scope="col">Concern</th>
-                                        <th scope="col">Categories Assigned</th>
+                                        <th scope="col">Category's Assigned</th>
                                         <th scope="col">Response Channel</th>
                                         <th scope="col">Status</th>
                                         {{--									<th scope="col">Creation Date</th> --}}
@@ -105,6 +105,11 @@
                                             <td>{{ $complaint->telephone }}</td>
                                             <td>{{ $complaint->concern }}</td>
                                             <td>
+                                                @if ($complaint->complaintCategory)
+                                                    <span class="badge fw-semibold py-1 w-85 bg-light-info text-info">
+                                                        {{ $complaint->complaintCategory->name }},
+                                                    </span>
+                                                @endif
                                                 @foreach ($complaint->categories->take(1) as $category)
                                                     <span class="badge fw-semibold py-1 w-85 bg-light-info text-info">
                                                         {{ $category->name }}

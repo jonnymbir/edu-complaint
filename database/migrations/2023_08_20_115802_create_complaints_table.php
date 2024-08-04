@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
-			// $table->foreignId('complaint_category_id')->nullable()->constrained('complaint_categories')->onDelete('set null');
+			$table->foreignId('complaint_category_id')->nullable()->constrained('complaint_categories')->onDelete('set null');
 			$table->string('ticket_number')->unique();
 			$table->string('first_name');
 			$table->string('middle_name')->nullable();

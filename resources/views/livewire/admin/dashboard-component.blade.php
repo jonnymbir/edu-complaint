@@ -124,13 +124,13 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table align-middle text-nowrap mb-0">
+                        <table class="table align-middle mb-0">
                             <thead>
                                 <tr class="text-muted fw-semibold">
                                     <th scope="col" class="ps-0">Full Name</th>
                                     <th scope="col" class="ps-0">Telephone</th>
                                     <th scope="col">Concern</th>
-                                    <th scope="col">Category Assigned</th>
+                                    <th scope="col">Category's Assigned</th>
                                     <th scope="col">Response Channel</th>
                                     <th scope="col">Status</th>
                                     {{--								<th scope="col">Creation Date</th> --}}
@@ -138,7 +138,7 @@
                             </thead>
                             <tbody class="border-top">
                                 @foreach ($recent_complaints as $key => $recent_complaint)
-                                    <tr>
+                                    <tr wire:key="{{ $key }}">
                                         <td class="ps-0">
                                             <div class="d-flex align-items-center">
                                                 <div class="me-2 pe-1">
@@ -161,13 +161,18 @@
                                             <p class="mb-0 fs-3">{{ $recent_complaint->concern }}</p>
                                         </td>
                                         <td>
+                                            @if ($recent_complaint->complaintCategory)
+                                                <p class="mb-0 fs-3">
+                                                    {{ $recent_complaint->complaintCategory->name }},
+                                                </p>
+                                            @endif
                                             {{-- <p class="mb-0 fs-3">{{ $recent_complaint->complaintCategory?->name ?? 'Not Specified' }}</p> --}}
                                             @foreach ($recent_complaint->categories->take(1) as $category)
-                                                    <span class="badge fw-semibold bg-light-info text-info">
-                                                        {{ $category->name }}
-                                                        {{ count($recent_complaint->categories) > 1 && $loop->last ? ' & '.count($recent_complaint->categories) - 1 . ' more' : '' }}
-                                                    </span>
-                                                @endforeach
+                                                <p class="mb-0 fs-3">
+                                                    {{ $category->name }}
+                                                    {{ count($recent_complaint->categories) > 1 && $loop->last ? ' & ' . count($recent_complaint->categories) - 1 . ' more' : '' }}
+                                                </p>
+                                            @endforeach
                                         </td>
                                         <td>
                                             <span class="badge fw-semibold py-1 w-85 bg-light-primary text-primary">

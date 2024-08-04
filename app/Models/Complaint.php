@@ -29,6 +29,8 @@ class Complaint extends Model
 		'age_range',
 		'region_id',
 		'district_id',
+        'town_locality',
+        'school',
 		'stakeholder_type',
 		'concern',
 		'details',
@@ -117,10 +119,10 @@ class Complaint extends Model
 		return Str::headline($value);
 	}
 
-	// public function complaintCategory(): BelongsTo
-	// {
-	// 	return $this->belongsTo(ComplaintCategory::class);
-	// }
+	public function complaintCategory(): BelongsTo
+	{
+		return $this->belongsTo(ComplaintCategory::class);
+	}
 
     /**
      * The categories that belong to the Complaint
